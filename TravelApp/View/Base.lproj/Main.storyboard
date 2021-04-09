@@ -402,6 +402,9 @@
                                         <rect key="frame" x="73" y="19.5" width="262" height="31.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <action selector="firstTextFieldDidBegin:" destination="3FG-dN-dCu" eventType="editingDidBegin" id="oc5-8s-Mre"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -427,6 +430,9 @@
                                         <rect key="frame" x="77" y="19.5" width="258" height="31.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="go" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        <connections>
+                                            <action selector="secondTextFieldDidBegin:" destination="3FG-dN-dCu" eventType="editingDidEnd" id="Xch-Mz-Zx1"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

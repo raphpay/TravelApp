@@ -25,6 +25,10 @@ class CurrencyVC : UIViewController {
     
     // MARK: - Properties
     lazy private var textFields : [UITextField] = [firstTextField, secondTextField]
+    var firstTextFieldIsOpen = false
+    var secondTextFieldIsOpen = false
+    var firstValue: Double = 0
+    var secondValue: Double = 0
     
     // MARK: - Actions
     @IBAction func invertButtonTapped(_ sender: UIButton) {
@@ -43,6 +47,14 @@ class CurrencyVC : UIViewController {
             convertButton.setTitle("Convert \(CurrencyType.euro.rawValue) to \(CurrencyType.usDollar.rawValue)", for: .normal)
         }
     }
+    @IBAction func firstTextFieldDidBegin(_ sender: Any) {
+        firstTextFieldIsOpen = true
+        secondTextFieldIsOpen = false
+    }
+    @IBAction func secondTextFieldDidBegin(_ sender: Any) {
+        firstTextFieldIsOpen = false
+        secondTextFieldIsOpen = true
+    }
     
     @IBAction func convertButtonTapped(_ sender: UIButton) {
         CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar)
@@ -50,8 +62,19 @@ class CurrencyVC : UIViewController {
     
     @objc func tapDone() {
         self.view.endEditing(true)
+        if firstTextFieldIsOpen {
+            getValue(from: firstTextField)
+        } else if secondTextFieldIsOpen {
+            getValue(from: secondTextField)
+        }
     }
     
+    private func getValue(from textField: UITextField) -> Double? {
+        guard let text = textField.text,
+              let value = Double(text) else { return nil }
+        print(value)
+        return value
+    }
     
     // MARK: - Override Methods
     override func viewDidLoad() {
@@ -84,6 +107,7 @@ class CurrencyVC : UIViewController {
 extension CurrencyVC : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        tapDone()
         return true
     }
 }

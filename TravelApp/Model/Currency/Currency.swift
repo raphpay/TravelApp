@@ -7,11 +7,12 @@
 
 import Foundation
 
-class Currency {
-    let base: CurrencyType
-    let value: Int? = 0
-    
-    init(base: CurrencyType) {
-        self.base = base
-    }
+struct Currency: Decodable {
+    let base: String
+    let rates: [Rate]
+}
+
+struct Rate: Decodable {
+    let base: String
+    let value: Double
 }

@@ -18,12 +18,20 @@ class CurrencyConverterService {
     func getRate(from base: CurrencyType, to rate: CurrencyType) {
         let completeEndPoint = "\(baseURL)\(FIXER_IO_ACCESS_KEY)&base=\(base.rawValue)&symbols=\(rate.rawValue)"
         let completeURL = URL(string: completeEndPoint)!
+        print(completeURL)
         let request = URLRequest(url: completeURL)
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: request) { _data, _response, _error in
-            print(_data)
-            print(_response)
-            print(_error)
+            guard _error == nil else { return }
+            guard let data = _data else { return }
+            guard let response = _response as? HTTPURLResponse,
+                  response.statusCode == 200 else { return }
+            print(data)
+            guard let responseJSON = try? JSONDecoder().decode(Currency.self, from: data) else {
+                print("err")
+                return
+            }
+            print(responseJSON)
         }
         task.resume()
     }
