@@ -30,14 +30,37 @@ class WeatherVC : UIViewController {
     @IBAction func localButtonTapped(_ sender: UIButton) {
         print("Tapped 2")
     }
-    @IBOutlet weak var localCollectionView: UICollectionView!
+    
+    var localCollectionView: UICollectionView! = nil
     
     override func viewDidLoad() {
         title = "Weather App"
-        localCollectionView.delegate = self
-        localCollectionView.dataSource = self
+        
         destinationCollectionView.delegate = self
         destinationCollectionView.dataSource = self
+        configureCollectionViews()
+    }
+    
+    private func configureCollectionViews() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(localCollectionView)
+        
+        NSLayoutConstraint.activate([
+            localCollectionView.topAnchor.constraint(equalTo: localToggleButton.bottomAnchor, constant: 10),
+            localCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            localCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            localCollectionView.heightAnchor.constraint(equalToConstant: 128)
+        ])
+        
+        localCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: localCellID)
+        localCollectionView.backgroundColor = .red
+        localCollectionView.delegate = self
+        localCollectionView.dataSource = self
     }
 }
 
@@ -57,7 +80,11 @@ extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 128)
+        if collectionView == destinationCollectionView {
+            return CGSize(width: 150, height: 128)
+        } else {
+            return CGSize(width: 150, height: 128)
+        }
     }
 }
 

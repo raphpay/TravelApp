@@ -8,7 +8,8 @@
 import UIKit
 
 class WeatherCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var centerLabel: UILabel!
+
+    
     override class func awakeFromNib() {
         super.awakeFromNib()
         // Like viewDidLoad
