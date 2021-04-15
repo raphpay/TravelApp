@@ -17,6 +17,23 @@ enum City {
 
 //exempleCall = "https://api.openweathermap.org/data/2.5/onecall?appid=d92d5ad479ad8dc13ee9cd7c4739939d&lat=40.7143&lon=-74.006&exclude=hourly,minutely,alerts,daily"
 
+let WEATHER_JSON = """
+{
+  "lat": 33.4418,
+  "lon": -94.0377,
+  "timezone": "America/Chicago",
+  "timezone_offset": -18000,
+  "current": {
+    "date": 1617944249,
+    "weather": [
+      {
+        "id": 800
+      }
+    ]
+  }
+}
+"""
+
 class WeatherService {
     static var shared = WeatherService()
     private init() {}
@@ -27,6 +44,8 @@ class WeatherService {
     private var latitude: Double = 0
     private var longitude: Double = 0
     private var excludeOptions: String = ""
+    
+    
     
     func getWeather(in city: City, for timePeriod: TimePeriod) {
         // TODO : Find a way to make the switch inside the enum, or not in here
@@ -59,11 +78,20 @@ class WeatherService {
             guard let data = _data else { return }
             guard let response = _response as? HTTPURLResponse,
                   response.statusCode == 200 else { return }
-            guard let responseJSON = try? JSONDecoder().decode([String:String].self, from: data) else {
+            guard let responseJSON = try? JSONDecoder().decode(Weather.self, from: data) else {
                 print("not correct")
                 return
             }
-            print(responseJSON)
+            
+//            let jsonData = WEATHER_JSON.data(using: .utf8)!
+//            print(jsonData)
+//            guard let responseJSON = try? JSONDecoder().decode(Weather.self, from: jsonData) else {
+//                print("not correct")
+//                return
+//            }
+            
+            print(responseJSON.timezone)
+            print(responseJSON.current)
         }
         task.resume()
     }

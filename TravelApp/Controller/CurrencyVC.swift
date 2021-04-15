@@ -29,6 +29,8 @@ class CurrencyVC : UIViewController {
     var secondTextFieldIsOpen = false
     var firstValue: Double = 0
     var secondValue: Double = 0
+    var euroValue: Double = 1
+    var usDollarValue: Double = 1
     
     // MARK: - Actions
     @IBAction func invertButtonTapped(_ sender: UIButton) {
@@ -57,15 +59,15 @@ class CurrencyVC : UIViewController {
     }
     
     @IBAction func convertButtonTapped(_ sender: UIButton) {
-        CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar)
+//        CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar)
     }
     
     @objc func tapDone() {
         self.view.endEditing(true)
         if firstTextFieldIsOpen {
-            getValue(from: firstTextField)
+            let _ = getValue(from: firstTextField)
         } else if secondTextFieldIsOpen {
-            getValue(from: secondTextField)
+            let _ = getValue(from: secondTextField)
         }
     }
     
@@ -81,6 +83,9 @@ class CurrencyVC : UIViewController {
         title = "Currency"
         setupUI()
         setupTextFields()
+        CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { value in
+            self.marketOrderLabel.text = "Market Order: \(self.euroValue)€ = \(value)$"
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -8,15 +8,15 @@
 import Foundation
 
 struct Weather : Decodable {
-    let currentWeather: CurrentWeather
+    let timezone: String
+    let current: CurrentWeather
 }
 
 struct CurrentWeather: Decodable {
-    let date: Double
-    let temperature: Double
-    let weatherData: WeatherData
+    let dt: Double
+    let weather: [WeatherData]
 }
 
 struct WeatherData: Decodable {
-    let id: Int
+    let id: Double
 }
