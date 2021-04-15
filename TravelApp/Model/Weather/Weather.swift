@@ -8,5 +8,15 @@
 import Foundation
 
 struct Weather : Decodable {
-    
+    let currentWeather: CurrentWeather
+}
+
+struct CurrentWeather: Decodable {
+    let date: Double
+    let temperature: Double
+    let weatherData: WeatherData
+}
+
+struct WeatherData: Decodable {
+    let id: Int
 }

@@ -19,6 +19,7 @@ class WeatherVC : UIViewController {
     @IBOutlet weak var destinationToggleButton: UIButton!
     @IBAction func destinationButtonTapped(_ sender: UIButton) {
         print("Tapped 1")
+        WeatherService.shared.getWeather(in: .local, for: .current)
     }
     
     @IBOutlet weak var localImageView: UIImageView!
