@@ -11,7 +11,6 @@ let screenWidth = UIScreen.main.bounds.size.width
 
 class WeatherVC : UIViewController {
     
-    private let localCellID = "localCellID"
     private let destinationCellID = "destinationCellID"
     
     @IBOutlet weak var destinationImageView: UIImageView!
@@ -21,7 +20,6 @@ class WeatherVC : UIViewController {
     @IBAction func destinationButtonTapped(_ sender: UIButton) {
         print("Tapped 1")
     }
-    @IBOutlet weak var destinationCollectionView: UICollectionView!
     
     @IBOutlet weak var localImageView: UIImageView!
     @IBOutlet weak var localTemperatureLabel: UILabel!
@@ -31,34 +29,55 @@ class WeatherVC : UIViewController {
         print("Tapped 2")
     }
     
-    var localCollectionView: UICollectionView! = nil
+    private var destinationCollectionView: UICollectionView! = nil
+    private var localCollectionView: UICollectionView! = nil
     
     override func viewDidLoad() {
         title = "Weather App"
-        
-        destinationCollectionView.delegate = self
-        destinationCollectionView.dataSource = self
         configureCollectionViews()
     }
     
     private func configureCollectionViews() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        let destinationLayout = UICollectionViewFlowLayout()
+        destinationLayout.scrollDirection = .horizontal
+        destinationLayout.itemSize = CGSize(width: 80, height: 138)
+        destinationLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         
-        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        let localLayout = UICollectionViewFlowLayout()
+        localLayout.scrollDirection = .horizontal
+        localLayout.itemSize = CGSize(width: 80, height: 138)
+        localLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        
+        destinationCollectionView = UICollectionView(frame: .zero, collectionViewLayout: destinationLayout)
+        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: localLayout)
         
         self.view.addSubview(localCollectionView)
+        self.view.addSubview(destinationCollectionView)
+        
+        destinationCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            localCollectionView.topAnchor.constraint(equalTo: localToggleButton.bottomAnchor, constant: 10),
+            destinationCollectionView.topAnchor.constraint(equalTo: destinationToggleButton.bottomAnchor, constant: 5),
+            destinationCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            destinationCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            destinationCollectionView.heightAnchor.constraint(equalToConstant: 138),
+            
+            localCollectionView.topAnchor.constraint(equalTo: localToggleButton.bottomAnchor, constant: 5),
             localCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             localCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            localCollectionView.heightAnchor.constraint(equalToConstant: 128)
+            localCollectionView.heightAnchor.constraint(equalToConstant: 138)
         ])
         
-        localCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: localCellID)
-        localCollectionView.backgroundColor = .red
+        destinationCollectionView.showsHorizontalScrollIndicator = false
+        destinationCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.localCellID)
+        destinationCollectionView.backgroundColor = .clear
+        destinationCollectionView.delegate = self
+        destinationCollectionView.dataSource = self
+        
+        localCollectionView.showsHorizontalScrollIndicator = false
+        localCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.localCellID)
+        localCollectionView.backgroundColor = .clear
         localCollectionView.delegate = self
         localCollectionView.dataSource = self
     }
@@ -66,24 +85,21 @@ class WeatherVC : UIViewController {
 
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        if collectionView == localCollectionView {
+            return 7
+        } else {
+            return 10
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == localCollectionView {
-            // remplissage de cellule du haut
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: localCellID, for: indexPath) as! WeatherCollectionViewCell
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: destinationCellID, for: indexPath) as! WeatherCollectionViewCell
-            return cell
-        }
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        print("cellForItemAt")
         if collectionView == destinationCollectionView {
-            return CGSize(width: 150, height: 128)
+            let destinationCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
+            return destinationCell
         } else {
-            return CGSize(width: 150, height: 128)
+            let localCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
+            return localCell
         }
     }
 }
