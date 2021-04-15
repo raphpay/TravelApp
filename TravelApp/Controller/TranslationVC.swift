@@ -9,29 +9,41 @@ import UIKit
 
 class TranslationVC : UIViewController {
     
-    @IBOutlet weak var topBackgroundView: UIView!
-    @IBOutlet weak var bottomBackgroundView: UIView!
+    
+    // MARK: - Outlets
+    @IBOutlet weak var firstBackgroundView: UIView!
+    @IBOutlet weak var secondBackgroundView: UIView!
     @IBOutlet weak var leftFlag: UIImageView!
-    @IBOutlet weak var leftCountryLabel: UILabel!
+    @IBOutlet weak var leftLanguageLabel: UILabel!
     @IBOutlet weak var rightFlag: UIImageView!
-    @IBOutlet weak var rightCountryLabel: UILabel!
-    @IBOutlet weak var topTextView: UITextView!
-    @IBOutlet weak var translationLabel: UILabel!
-    @IBOutlet weak var bottomTextView: UITextView!
+    @IBOutlet weak var rightLanguageLabel: UILabel!
+    @IBOutlet weak var entryTextView: UITextView!
+    @IBOutlet weak var translatedTextView: UITextView!
+    @IBOutlet weak var translateLabel: UILabel!
     
-    @IBAction func exchangeButtonTapped(_ sender: UIButton) {
+    
+    // MARK: - Actions
+    @IBAction func translateButtonTapped(_ sender: UIButton) {
+        print("translateButtonTapped")
     }
-    @IBAction func topCopyButtonTapped(_ sender: UIButton) {
+    @IBAction func entryCopyButtonTapped(_ sender: UIButton) {
+        print("entryCopyButton")
     }
-    @IBAction func bottomCopyButtonTapped(_ sender: UIButton) {
+    @IBAction func translatedTextCopyButtonTapped(_ sender: Any) {
+        print("translatedTextCopyButton")
     }
     
+    
+    // MARK: - Override methods
     override func viewDidLoad() {
         styleView()
+        title = "Translate"
     }
     
-    func styleView() {
-        topBackgroundView.layer.cornerRadius = 10
-        bottomBackgroundView.layer.cornerRadius = 10
+    
+    // MARK: - Private methods
+    private func styleView() {
+        firstBackgroundView.layer.cornerRadius = 10
+        secondBackgroundView.layer.cornerRadius = 10
     }
 }
