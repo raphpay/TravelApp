@@ -78,6 +78,7 @@ class CurrencyVC : UIViewController {
     
     // MARK: - Override Methods
     override func viewDidLoad() {
+        title = "Currency"
         setupUI()
         setupTextFields()
     }

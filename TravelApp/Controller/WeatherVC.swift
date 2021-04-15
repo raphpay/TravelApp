@@ -33,7 +33,7 @@ class WeatherVC : UIViewController {
     private var localCollectionView: UICollectionView! = nil
     
     override func viewDidLoad() {
-        title = "Weather App"
+        title = "Weather"
         configureCollectionViews()
     }
     

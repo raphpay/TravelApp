@@ -170,7 +170,7 @@
             </objects>
             <point key="canvasLocation" x="566" y="311"/>
         </scene>
-        <!--Currency-->
+        <!--CurrencyVC-->
         <scene sceneID="uP9-3d-8dX">
             <objects>
                 <viewController id="3FG-dN-dCu" customClass="CurrencyVC" customModule="TravelApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -178,20 +178,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rv5-qI-eFD">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
-                                <items>
-                                    <navigationItem title="Conversion" id="5h5-PC-XYP"/>
-                                </items>
-                            </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Market Order" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ix4-bs-57j">
-                                <rect key="frame" x="16" y="96" width="343" height="21"/>
+                                <rect key="frame" x="16" y="112" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiM-iT-IbW">
-                                <rect key="frame" x="16" y="137" width="343" height="70"/>
+                                <rect key="frame" x="16" y="149" width="343" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDg-de-3Z7">
                                         <rect key="frame" x="8" y="17" width="57" height="36"/>
@@ -219,7 +213,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEZ-gn-wYm">
-                                <rect key="frame" x="16" y="227" width="343" height="70"/>
+                                <rect key="frame" x="16" y="239" width="343" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gQ-2d-d7q">
                                         <rect key="frame" x="8" y="17" width="61" height="36"/>
@@ -260,7 +254,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KgO-E9-B8m">
-                                <rect key="frame" x="167.5" y="198" width="40" height="40"/>
+                                <rect key="frame" x="167.5" y="209" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="TmT-tb-N4O"/>
                                     <constraint firstAttribute="height" constant="40" id="alA-0K-J52"/>
@@ -276,25 +270,22 @@
                         <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="KgO-E9-B8m" firstAttribute="centerX" secondItem="EU2-32-L9e" secondAttribute="centerX" id="4rb-Jc-upY"/>
-                            <constraint firstItem="Rv5-qI-eFD" firstAttribute="trailing" secondItem="P7r-Tk-bhU" secondAttribute="trailing" id="8Wv-F4-nl6"/>
-                            <constraint firstItem="ix4-bs-57j" firstAttribute="top" secondItem="Rv5-qI-eFD" secondAttribute="bottom" id="BlG-kB-5CE"/>
-                            <constraint firstItem="Rv5-qI-eFD" firstAttribute="top" secondItem="P7r-Tk-bhU" secondAttribute="top" id="HhK-5t-UC8"/>
-                            <constraint firstItem="KgO-E9-B8m" firstAttribute="top" secondItem="ix4-bs-57j" secondAttribute="bottom" constant="81" id="I0w-eh-IRq"/>
-                            <constraint firstItem="ix4-bs-57j" firstAttribute="leading" secondItem="P7r-Tk-bhU" secondAttribute="leading" constant="16" id="M2D-Cw-Uo9"/>
+                            <constraint firstItem="KgO-E9-B8m" firstAttribute="top" secondItem="iiM-iT-IbW" secondAttribute="bottom" constant="-10" id="6GL-GW-ud0"/>
                             <constraint firstItem="XcP-W3-rE4" firstAttribute="leading" secondItem="P7r-Tk-bhU" secondAttribute="leading" constant="16" id="NRh-vq-GrD"/>
-                            <constraint firstItem="Rv5-qI-eFD" firstAttribute="leading" secondItem="P7r-Tk-bhU" secondAttribute="leading" id="RLr-2O-ogn"/>
-                            <constraint firstItem="iiM-iT-IbW" firstAttribute="top" secondItem="ix4-bs-57j" secondAttribute="bottom" constant="20" id="Tmx-EX-HpN"/>
-                            <constraint firstItem="P7r-Tk-bhU" firstAttribute="trailing" secondItem="ix4-bs-57j" secondAttribute="trailing" constant="16" id="VGp-W5-0XB"/>
                             <constraint firstItem="iiM-iT-IbW" firstAttribute="leading" secondItem="P7r-Tk-bhU" secondAttribute="leading" constant="16" id="f8x-a0-6Ze"/>
                             <constraint firstItem="JEZ-gn-wYm" firstAttribute="leading" secondItem="P7r-Tk-bhU" secondAttribute="leading" constant="16" id="hrE-Lw-B6V"/>
-                            <constraint firstItem="JEZ-gn-wYm" firstAttribute="top" secondItem="iiM-iT-IbW" secondAttribute="bottom" constant="20" id="ic0-v5-hjw"/>
+                            <constraint firstItem="ix4-bs-57j" firstAttribute="leading" secondItem="P7r-Tk-bhU" secondAttribute="leading" constant="16" id="i0J-gp-JpI"/>
                             <constraint firstItem="P7r-Tk-bhU" firstAttribute="bottom" secondItem="XcP-W3-rE4" secondAttribute="bottom" constant="20" id="kAq-wk-l9k"/>
                             <constraint firstItem="P7r-Tk-bhU" firstAttribute="trailing" secondItem="XcP-W3-rE4" secondAttribute="trailing" constant="16" id="kdv-LC-uzc"/>
+                            <constraint firstItem="P7r-Tk-bhU" firstAttribute="trailing" secondItem="ix4-bs-57j" secondAttribute="trailing" constant="16" id="mtX-Zv-7Ud"/>
                             <constraint firstItem="P7r-Tk-bhU" firstAttribute="trailing" secondItem="iiM-iT-IbW" secondAttribute="trailing" constant="16" id="nzA-PW-bTA"/>
+                            <constraint firstItem="ix4-bs-57j" firstAttribute="top" secondItem="P7r-Tk-bhU" secondAttribute="top" constant="16" id="pir-Mz-VbW"/>
+                            <constraint firstItem="JEZ-gn-wYm" firstAttribute="top" secondItem="KgO-E9-B8m" secondAttribute="bottom" constant="-10" id="rob-CK-LPK"/>
                             <constraint firstItem="P7r-Tk-bhU" firstAttribute="trailing" secondItem="JEZ-gn-wYm" secondAttribute="trailing" constant="16" id="uQ7-um-wjC"/>
+                            <constraint firstItem="iiM-iT-IbW" firstAttribute="top" secondItem="ix4-bs-57j" secondAttribute="bottom" constant="16" id="xRj-qd-eZc"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Currency" image="dollarsign.circle.fill" catalog="system" selectedImage="dollarsign.circle.fill" id="vD9-fx-hIg"/>
+                    <navigationItem key="navigationItem" id="md0-8Y-6cJ"/>
                     <connections>
                         <outlet property="convertButton" destination="XcP-W3-rE4" id="3km-kK-uVA"/>
                         <outlet property="firstContainerView" destination="iiM-iT-IbW" id="pMp-v2-DVK"/>
@@ -308,7 +299,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHP-nF-YQS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-310" y="-430"/>
+            <point key="canvasLocation" x="628" y="-430.43478260869568"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Exe-Sd-bCU">
@@ -320,7 +311,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="3FG-dN-dCu" kind="relationship" relationship="viewControllers" id="RBM-um-ked"/>
+                        <segue destination="ns3-dF-Ob2" kind="relationship" relationship="viewControllers" id="RBM-um-ked"/>
                         <segue destination="emj-Fw-8fe" kind="relationship" relationship="viewControllers" id="mkp-UM-Rai"/>
                         <segue destination="5CQ-fm-MwU" kind="relationship" relationship="viewControllers" id="uIg-bY-A68"/>
                     </connections>
@@ -346,7 +337,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vh8-wK-BYf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1558" y="-430"/>
+            <point key="canvasLocation" x="2496.8000000000002" y="-430.43478260869568"/>
         </scene>
         <!--Weather-->
         <scene sceneID="hWx-Oo-w4Z">
@@ -365,7 +356,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mee-pj-mR6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="565.60000000000002" y="-429.53523238380814"/>
+            <point key="canvasLocation" x="1504.8" y="-429.53523238380814"/>
         </scene>
         <!--TranslationVC-->
         <scene sceneID="3h6-a0-CqO">
@@ -516,9 +507,6 @@
                                                         <state key="normal" image="􀐅">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="translatedTextCopyButtonTapped:" destination="itf-8F-mG2" eventType="touchUpInside" id="bXx-ge-bHT"/>
-                                                        </connections>
                                                     </button>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Hello ! See the translated text here !" translatesAutoresizingMaskIntoConstraints="NO" id="Vqo-X0-j0e">
                                                         <rect key="frame" x="16" y="54" width="309" height="230"/>
@@ -584,6 +572,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fib-h0-QS2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1557.5999999999999" y="333.28335832083962"/>
+        </scene>
+        <!--Currency-->
+        <scene sceneID="VYT-T3-cRv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ns3-dF-Ob2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Currency" image="dollarsign.circle.fill" catalog="system" selectedImage="dollarsign.circle.fill" id="vD9-fx-hIg"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="BQ3-CK-Pdd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3FG-dN-dCu" kind="relationship" relationship="rootViewController" id="qYt-UH-z8j"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdA-Aj-O1t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-311.19999999999999" y="-430.43478260869568"/>
         </scene>
     </scenes>
     <resources>
