@@ -46,6 +46,13 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(icon: UIImage, degrees: String, time: String) {
+        // TODO: Verify the type of the parameters with the conversion from the API
+        weatherImage.image = icon
+        degreesLabel.text = degrees
+        dateLabel.text = time
+    }
+    
     private func configureCellUI() {
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 1

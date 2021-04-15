@@ -85,20 +85,17 @@ class WeatherVC : UIViewController {
 
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == localCollectionView {
-            return 7
-        } else {
-            return 10
-        }
+        return 7
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt")
         if collectionView == destinationCollectionView {
             let destinationCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
+            destinationCell.configure(icon: UIImage(named: "cloud.rain.fill")!, degrees: "\(indexPath.item)", time: "dest")
             return destinationCell
         } else {
             let localCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
+            localCell.configure(icon: UIImage(named: "cloud.rain.fill")!, degrees: "\(indexPath.item)", time: "Local")
             return localCell
         }
     }

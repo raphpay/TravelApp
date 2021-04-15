@@ -542,6 +542,35 @@
             </objects>
             <point key="canvasLocation" x="565.60000000000002" y="-429.53523238380814"/>
         </scene>
+        <!--TranslationVC-->
+        <scene sceneID="wbK-vS-XsL">
+            <objects>
+                <viewController id="lYP-pe-aVP" customClass="TranslationVC" customModule="TravelApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LFp-Z4-lIb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hzd-SQ-PAn">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="PnM-5a-WmK"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Gbz-JP-C0n"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dMW-l0-xus"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="hzd-SQ-PAn" firstAttribute="leading" secondItem="dMW-l0-xus" secondAttribute="leading" id="CHD-qx-mOs"/>
+                            <constraint firstItem="hzd-SQ-PAn" firstAttribute="top" secondItem="dMW-l0-xus" secondAttribute="top" id="GVi-np-FjI"/>
+                            <constraint firstItem="dMW-l0-xus" firstAttribute="bottom" secondItem="hzd-SQ-PAn" secondAttribute="bottom" id="Wx1-iW-zeg"/>
+                            <constraint firstItem="dMW-l0-xus" firstAttribute="trailing" secondItem="hzd-SQ-PAn" secondAttribute="trailing" id="wsV-jp-TKz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="213-fk-MlP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sOS-25-7fV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4544.8000000000002" y="-430.43478260869568"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Invert-Button" width="40" height="40"/>
