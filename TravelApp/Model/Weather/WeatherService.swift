@@ -82,16 +82,12 @@ class WeatherService {
                 print("not correct")
                 return
             }
-            
-//            let jsonData = WEATHER_JSON.data(using: .utf8)!
-//            print(jsonData)
-//            guard let responseJSON = try? JSONDecoder().decode(Weather.self, from: jsonData) else {
-//                print("not correct")
-//                return
-//            }
-            
-            print(responseJSON.timezone)
-            print(responseJSON.current)
+            let date = NSDate(timeIntervalSince1970: responseJSON.current.dt)
+            print(date)
+            let formatter = DateFormatter()
+//            formatter.locale = Locale(identifier: "fr")
+            formatter.dateFormat = "E"
+            print(formatter.string(from: date as Date))
         }
         task.resume()
     }
