@@ -7,8 +7,6 @@
 
 import Foundation
 
-let FIXER_IO_ACCESS_KEY = "35a65c4c0c6a14b719046795b7a5f816"
-
 let CURRENCY_JSON = """
     {
       "success": true,
@@ -30,9 +28,10 @@ class CurrencyConverterService {
     private init() {}
     
     private let baseURL = "http://data.fixer.io/api/latest?access_key="
+    private let ACCESS_KEY = "35a65c4c0c6a14b719046795b7a5f816"
     
     func getRate(from base: CurrencyType, to rate: CurrencyType, completionHandler: @escaping ((Double) -> Void)) {
-        let completeEndPoint = "\(baseURL)\(FIXER_IO_ACCESS_KEY)&base=\(base.rawValue)&symbols=\(rate.rawValue)"
+        let completeEndPoint = "\(baseURL)\(ACCESS_KEY)&base=\(CurrencyType.euro.info.code)&symbols=\(CurrencyType.usDollar.info.code)"
         let completeURL = URL(string: completeEndPoint)!
         let request = URLRequest(url: completeURL)
         let session = URLSession(configuration: .default)
@@ -45,19 +44,17 @@ class CurrencyConverterService {
                 print("err")
                 return
             }
-            print(responseJSON)
             let USDRate = responseJSON.rates.USD
-            DispatchQueue.main.async {
-                completionHandler(USDRate)
+            if base == .euro {
+                DispatchQueue.main.async {
+                    completionHandler(USDRate)
+                }
+            } else {
+                let EURRate = 1 / USDRate
+                DispatchQueue.main.async {
+                    completionHandler(EURRate)
+                }
             }
-            // TODO: Remove the following code -> Used for testing purposes
-//            let jsonData = CURRENCY_JSON.data(using: .utf8)!
-//            guard let responseJSON = try? JSONDecoder().decode(Currency.self, from: jsonData) else {
-//                print("not correct")
-//                return
-//            }
-//            print(responseJSON)
-//            print(responseJSON.rates)
         }
         task.resume()
     }
