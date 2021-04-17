@@ -9,34 +9,91 @@ import UIKit
 
 let screenWidth = UIScreen.main.bounds.size.width
 
+enum ButtonTitle: String {
+    case week = "Week"
+    case today = "Today"
+}
+
 class WeatherVC : UIViewController {
     
-    private let destinationCellID = "destinationCellID"
     
+    // MARK: - Outlets
     @IBOutlet weak var destinationImageView: UIImageView!
     @IBOutlet weak var destinationTemperatureLabel: UILabel!
     @IBOutlet weak var destinationCityLabel: UILabel!
     @IBOutlet weak var destinationToggleButton: UIButton!
-    @IBAction func destinationButtonTapped(_ sender: UIButton) {
-        WeatherService.shared.getWeather(in: .local, for: .current)
-    }
+    
     
     @IBOutlet weak var localImageView: UIImageView!
     @IBOutlet weak var localTemperatureLabel: UILabel!
     @IBOutlet weak var localCityLabel: UILabel!
     @IBOutlet weak var localToggleButton: UIButton!
+    
+    
+    // MARK: - Actions
+    @IBAction func destinationButtonTapped(_ sender: UIButton) {
+//        if destinationDisplay == .week {
+//            WeatherService.shared.getWeather(in: .local, for: .day)
+//            destinationDisplay = .today
+//            destinationToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
+//        } else {
+//            WeatherService.shared.getWeather(in: .local, for: .week)
+//            destinationDisplay = .week
+//            destinationToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
+//        }
+//        WeatherService.shared.getDailyWeather(in: .local)
+//        WeatherService.shared.getHourlyWeather(in: .local)
+//        WeatherService.shared.getCurrentWeather(in: .local)
+    }
     @IBAction func localButtonTapped(_ sender: UIButton) {
-        print("Tapped 2")
+        if localDisplay == .week {
+//            WeatherService.shared.getWeather(in: .local, for: .day)
+            localDisplay = .today
+            localToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
+        } else {
+//            WeatherService.shared.getWeather(in: .local, for: .week)
+            localDisplay = .week
+            localToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
+        }
     }
     
+    
+    
+    // MARK: - Properties
     private var destinationCollectionView: UICollectionView! = nil
     private var localCollectionView: UICollectionView! = nil
+    private var destinationDisplay : ButtonTitle = .week
+    private var localDisplay : ButtonTitle = .week
     
+    private let thunderstormRange = 200...232
+    private let drizzleRange = 300...321
+    private let rainRange = 500...531
+    private let snowRange = 600...622
+    private let smokeRange = 711
+    private let fogRange = 741
+    private let clearRange = 800
+    private let cloudRange = 801...804
+    
+    
+    // MARK: - Override Methods
     override func viewDidLoad() {
         title = "Weather"
         configureCollectionViews()
+        WeatherService.shared.getCurrentWeather(in: .newYork) { weatherID, temperature in
+            self.convertIcon(id: weatherID, for: self.destinationImageView)
+            self.destinationTemperatureLabel.text = "\(temperature)°C"
+        }
+        WeatherService.shared.getCurrentWeather(in: .local) { weatherID, temperature in
+            self.convertIcon(id: weatherID, for: self.localImageView)
+            self.localTemperatureLabel.text = "\(temperature)°C"
+        }
+        WeatherService.shared.getDailyWeather(in: .newYork) { (weatherID, temperature) in
+            //
+        }
     }
     
+    
+    // MARK: - Private methods
     private func configureCollectionViews() {
         let destinationLayout = UICollectionViewFlowLayout()
         destinationLayout.scrollDirection = .horizontal
@@ -81,8 +138,32 @@ class WeatherVC : UIViewController {
         localCollectionView.delegate = self
         localCollectionView.dataSource = self
     }
+    private func convertIcon(id: Int, for image: UIImageView) {
+
+        if thunderstormRange.contains(id) {
+            image.image = UIImage(named: WeatherIcons.thunderstorm.rawValue)
+        } else if drizzleRange.contains(id){
+            image.image = UIImage(named: WeatherIcons.drizzle.rawValue)
+        } else if rainRange.contains(id) {
+            image.image = UIImage(named: WeatherIcons.rain.rawValue)
+        } else if snowRange.contains(id) {
+            image.image = UIImage(named: WeatherIcons.snow.rawValue)
+        } else if id == smokeRange {
+            image.image = UIImage(named: WeatherIcons.smoke.rawValue)
+        } else if id == fogRange {
+            image.image = UIImage(named: WeatherIcons.fog.rawValue)
+        } else if id == clearRange {
+            image.image = UIImage(named: WeatherIcons.clear.rawValue)
+        } else if cloudRange.contains(id) {
+            image.image = UIImage(named: WeatherIcons.cloud.rawValue)
+        } else {
+            image.image = UIImage(named: WeatherIcons.clear.rawValue)
+        }
+    }
 }
 
+
+// MARK: - Collection View
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7

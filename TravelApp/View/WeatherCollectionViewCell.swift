@@ -15,7 +15,8 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     private let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "cloud.rain.fill")
+        imageView.image = UIImage(named: WeatherIcons.cloud.rawValue)
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

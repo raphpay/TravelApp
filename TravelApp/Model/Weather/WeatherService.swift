@@ -1,4 +1,4 @@
-//
+
 //  WeatherService.swift
 //  TravelApp
 //
@@ -17,23 +17,6 @@ enum City {
 
 //exempleCall = "https://api.openweathermap.org/data/2.5/onecall?appid=d92d5ad479ad8dc13ee9cd7c4739939d&lat=40.7143&lon=-74.006&exclude=hourly,minutely,alerts,daily"
 
-let WEATHER_JSON = """
-{
-  "lat": 33.4418,
-  "lon": -94.0377,
-  "timezone": "America/Chicago",
-  "timezone_offset": -18000,
-  "current": {
-    "date": 1617944249,
-    "weather": [
-      {
-        "id": 800
-      }
-    ]
-  }
-}
-"""
-
 class WeatherService {
     static var shared = WeatherService()
     private init() {}
@@ -45,9 +28,7 @@ class WeatherService {
     private var longitude: Double = 0
     private var excludeOptions: String = ""
     
-    
-    
-    func getWeather(in city: City, for timePeriod: TimePeriod) {
+    func getDailyWeather(in city: City, completion: @escaping ((_ weatherID: Int, _ temperature: Double) -> Void)) {
         // TODO : Find a way to make the switch inside the enum, or not in here
         switch city {
             case .local:
@@ -57,18 +38,7 @@ class WeatherService {
                 latitude = 40.7143
                 longitude = -74.006
         }
-        switch timePeriod {
-        case .week:
-            // Used for weekly periods
-            excludeOptions = "hourly,minutely,alerts,current"
-        case .day:
-            // Used for weather hour after hour in a day
-            excludeOptions = "minutely,alerts,daily,current"
-        case .current:
-            // Used for current weather on big icon
-            excludeOptions = "daily,hourly,minutely,alerts"
-        }
-
+        let excludeOptions = "hourly,minutely,alerts,current"
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(latitude)" + "&lon=\(longitude)" + "&exclude=\(excludeOptions)"
         let url = URL(string: completeStringURL)!
         let request = URLRequest(url: url)
@@ -78,18 +48,88 @@ class WeatherService {
             guard let data = _data else { return }
             guard let response = _response as? HTTPURLResponse,
                   response.statusCode == 200 else { return }
-            guard let responseJSON = try? JSONDecoder().decode(Weather.self, from: data) else {
+            guard let responseJSON = try? JSONDecoder().decode(DailyWeather.self, from: data) else {
                 print("not correct")
                 return
             }
-            let date = NSDate(timeIntervalSince1970: responseJSON.current.dt)
-            print(date)
+            print(responseJSON)
+            let date = NSDate(timeIntervalSince1970: responseJSON.daily[1].dt)
             let formatter = DateFormatter()
-//            formatter.locale = Locale(identifier: "fr")
             formatter.dateFormat = "E"
             print(formatter.string(from: date as Date))
         }
         task.resume()
     }
-    
+    func getHourlyWeather(in city: City, completion: @escaping ((_ weatherID: Int, _ temperature: Double) -> Void)) {
+        switch city {
+            case .local:
+                latitude = 55.4719
+                longitude = -21.1336
+            case .newYork:
+                latitude = 40.7143
+                longitude = -74.006
+        }
+        let excludeOptions = "minutely,alerts,daily,current"
+        let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(latitude)" + "&lon=\(longitude)" + "&exclude=\(excludeOptions)"
+        let url = URL(string: completeStringURL)!
+        let request = URLRequest(url: url)
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: request) { _data, _response, _error in
+            guard _error == nil else { return }
+            guard let data = _data else { return }
+            guard let response = _response as? HTTPURLResponse,
+                  response.statusCode == 200 else { return }
+            guard let responseJSON = try? JSONDecoder().decode(HourlyWeather.self, from: data) else {
+                print("not correct")
+                return
+            }
+            
+            print(responseJSON.hourly[0].dt)
+            
+            let date = NSDate(timeIntervalSince1970: responseJSON.hourly[1].dt)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH"
+            print(formatter.string(from: date as Date))
+        }
+        task.resume()
+    }
+    func getCurrentWeather(in city: City, completion: @escaping ((_ weatherID: Int, _ temperature: Double) -> Void)) {
+        // Step 1 : Create the URL
+        switch city {
+            case .local:
+                latitude = -21.13357
+                longitude = 55.4719
+            case .newYork:
+                latitude = 40.7143
+                longitude = -74.006
+        }
+        
+        let excludeOptions = "daily,hourly,minutely,alerts"
+        let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(latitude)" + "&lon=\(longitude)" + "&exclude=\(excludeOptions)"
+        let url = URL(string: completeStringURL)!
+        // Step 2 : Create the request
+        let request = URLRequest(url: url)
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: request) { _data, _response, _error in
+            // Step 3: Verify the data
+            guard _error == nil else { return }
+            guard let data = _data else { return }
+            guard let response = _response as? HTTPURLResponse,
+                  response.statusCode == 200 else { return }
+            guard let responseJSON = try? JSONDecoder().decode(CurrentWeather.self, from: data) else {
+                print("not correct")
+                return
+            }
+            // Step 4 : Use the data
+            let weatherID = responseJSON.current.weather[0].id
+            let temperatureInKelvin = responseJSON.current.temp
+            // TODO : Get a rounded Int
+            let convertedTemperature = temperatureInKelvin.convertFromKelvinToCelsius().round(to: 0)
+            print(convertedTemperature)
+            DispatchQueue.main.async {
+                completion(weatherID, convertedTemperature)
+            }
+        }
+        task.resume()
+    }
 }
