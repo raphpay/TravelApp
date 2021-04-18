@@ -48,7 +48,8 @@ class CurrencyVC : UIViewController {
         // API subscriptions doesn't allow to convert from USD -> Remove the possibility to invert currency ?
         if baseCurrency == .euro {
             convertUITo(.usDollar, from: .euro)
-            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (value) in
+            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
+                guard let value = _value else { return }
                 let roundedValue = value.round(to: 3)
                 self.marketOrderLabel.text = "Market order : 1\(CurrencyType.usDollar.info.symbol) = \(roundedValue)\(CurrencyType.euro.info.symbol)"
             }
@@ -56,7 +57,8 @@ class CurrencyVC : UIViewController {
         } else {
             convertUITo(.euro, from: .usDollar)
             baseCurrency = .euro
-            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (value) in
+            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+                guard let value = _value else { return }
                 let roundedValue = value.round(to: 3)
                 self.marketOrderLabel.text = "Market order : 1\(CurrencyType.euro.info.symbol) = \(roundedValue)\(CurrencyType.usDollar.info.symbol)"
             }
@@ -87,15 +89,17 @@ class CurrencyVC : UIViewController {
     
     @IBAction func convertButtonTapped(_ sender: UIButton) {
         if baseCurrency == .euro {
-            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (value) in
-                guard let baseValue = self.getValue(from: self.firstTextField) else { return }
+            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+                guard let value = _value,
+                        let baseValue = self.getValue(from: self.firstTextField) else { return }
                 let calculatedValue = baseValue * value
                 let calculatedRoundValue = calculatedValue.round(to: 3)
                 self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
             }
         } else {
-            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (value) in
-                guard let baseValue = self.getValue(from: self.firstTextField) else { return }
+            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
+                guard let value = _value,
+                        let baseValue = self.getValue(from: self.firstTextField) else { return }
                 let calculatedValue = baseValue * value
                 let calculatedRoundValue = calculatedValue.round(to: 3)
                 self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.euro.info.symbol)"
@@ -112,7 +116,8 @@ class CurrencyVC : UIViewController {
         title = "Currency"
         setupUI()
         setupTextFields()
-        CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { value in
+        CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+            guard let value = _value else { return }
             let roundedValue = value.round(to: 3)
             self.marketOrderLabel.text = "Market Order: \(self.euroValue)\(CurrencyType.euro.info.symbol) = \(roundedValue)\(CurrencyType.usDollar.info.symbol)"
         }
@@ -154,14 +159,15 @@ extension CurrencyVC : UITextFieldDelegate {
              let baseValue = Double(baseText) else { return false }
         let roundedBaseValue = baseValue.round(to: 3)
         if baseCurrency == .euro {
-            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (value) in
+            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+                guard let value = _value else { return }
                 let calculatedValue = roundedBaseValue * value // Cross product
                 let calculatedRoundValue = calculatedValue.round(to: 3)
                 self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
             }
         } else {
-            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (value) in
-                print(roundedBaseValue)
+            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
+                guard let value = _value else { return }
                 let calculatedValue = roundedBaseValue * value
                 let calculatedRoundValue = calculatedValue.round(to: 3)
                 self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.euro.info.symbol)"
