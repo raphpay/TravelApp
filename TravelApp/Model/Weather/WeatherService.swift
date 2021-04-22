@@ -75,7 +75,8 @@ class WeatherService {
         }
         task.resume()
     }
-    func getHourlyWeather(in city: City, completion: @escaping ((_ weatherID: Int, _ temperature: Double) -> Void)) {
+    
+    func getHourlyWeather(in city: City, completion: @escaping ((_ weatherObjects: [WeatherCardObject]) -> Void)) {
         switch city {
             case .local:
                 latitude = 55.4719
@@ -89,25 +90,38 @@ class WeatherService {
         let url = URL(string: completeStringURL)!
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default)
+        var array: [WeatherCardObject] = []
         let task = session.dataTask(with: request) { _data, _response, _error in
-            guard _error == nil else { return }
-            guard let data = _data else { return }
-            guard let response = _response as? HTTPURLResponse,
-                  response.statusCode == 200 else { return }
-            guard let responseJSON = try? JSONDecoder().decode(HourlyWeather.self, from: data) else {
-                print("not correct")
-                return
+            DispatchQueue.main.async {
+                guard _error == nil else { return }
+                guard let data = _data else { return }
+                guard let response = _response as? HTTPURLResponse,
+                      response.statusCode == 200 else { return }
+                guard let responseJSON = try? JSONDecoder().decode(HourlyWeather.self, from: data) else {
+                    print("not correct")
+                    return
+                }
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HH"
+                
+                for item in 0..<7 {
+                    let hour = responseJSON.hourly[item]
+                    let hourDate = NSDate(timeIntervalSince1970: hour.dt)
+                    let displayableDate = formatter.string(from: hourDate as Date)
+                    let kelvinTemperature = hour.temp
+                    let displayableTemp = kelvinTemperature.convertFromKelvinToCelsius().round(to: 0)
+                    let weatherID = hour.weather[0].id
+                    
+                    let object = WeatherCardObject(date: displayableDate, temperature: displayableTemp, iconId: weatherID)
+                    array.append(object)
+                }
+                completion(array)
             }
-            
-            print(responseJSON.hourly[0].dt)
-            
-            let date = NSDate(timeIntervalSince1970: responseJSON.hourly[1].dt)
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH"
-            print(formatter.string(from: date as Date))
         }
         task.resume()
     }
+    
     func getCurrentWeather(in city: City, completion: @escaping ((_ weatherID: Int, _ temperature: Double) -> Void)) {
         // Step 1 : Create the URL
         switch city {

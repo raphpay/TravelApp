@@ -50,8 +50,12 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     public func configure(icon: UIImage, degrees: Double, time: String) {
         // TODO: Verify the type of the parameters with the conversion from the API
         weatherImage.image = icon
-        degreesLabel.text = "\(degrees)"
-        dateLabel.text = time
+        degreesLabel.text = "\(degrees)°C"
+        if let intTime = Int(time) {
+            dateLabel.text = "\(intTime)H"
+        } else {
+            dateLabel.text = time
+        }
     }
     
     private func configureCellUI() {

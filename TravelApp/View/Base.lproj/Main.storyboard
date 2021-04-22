@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbJ-Pm-kta">
-                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-cR-3Ia">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="810"/>
@@ -109,7 +109,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="cRp-tf-KgV"/>
                                                         </constraints>
-                                                        <state key="normal" title="Today"/>
+                                                        <state key="normal" title="Week"/>
                                                         <connections>
                                                             <action selector="localButtonTapped:" destination="O8b-ie-RPq" eventType="touchUpInside" id="4pJ-Tf-ia8"/>
                                                         </connections>
