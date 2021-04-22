@@ -28,7 +28,7 @@ class WeatherService {
     private var longitude: Double = 0
     private var excludeOptions: String = ""
     
-    func getDailyWeather(in city: City, completion: @escaping ((_ weatherID: Int, _ temperature: Double) -> Void)) {
+    func getDailyWeather(in city: City, completion: @escaping ((_ weatherObject: [WeatherCardObject]) -> Void)) {
         // TODO : Find a way to make the switch inside the enum, or not in here
         switch city {
             case .local:
@@ -43,20 +43,35 @@ class WeatherService {
         let url = URL(string: completeStringURL)!
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default)
+        var array: [WeatherCardObject] = []
         let task = session.dataTask(with: request) { _data, _response, _error in
-            guard _error == nil else { return }
-            guard let data = _data else { return }
-            guard let response = _response as? HTTPURLResponse,
-                  response.statusCode == 200 else { return }
-            guard let responseJSON = try? JSONDecoder().decode(DailyWeather.self, from: data) else {
-                print("not correct")
-                return
+            DispatchQueue.main.async {
+                guard _error == nil else { return }
+                guard let data = _data else { return }
+                guard let response = _response as? HTTPURLResponse,
+                      response.statusCode == 200 else { return }
+                guard let responseJSON = try? JSONDecoder().decode(DailyWeather.self, from: data) else {
+                    print("not correct")
+                    return
+                }
+    //            print(responseJSON)
+                let formatter = DateFormatter()
+                formatter.dateFormat = "E"
+                for day in responseJSON.daily {
+                    let dayDate = NSDate(timeIntervalSince1970: day.dt)
+                    let currentDate = formatter.string(from: dayDate as Date)
+                    let kelvinTemperature = day.temp.day
+                    let temperature = kelvinTemperature.convertFromKelvinToCelsius().round(to: 0)
+                    let weatherID = day.weather[0].id
+                    let weatherObject = WeatherCardObject(date: currentDate,
+                                                          temperature: temperature,
+                                                          iconId: weatherID)
+                    array.append(weatherObject)
+                }
+                // Remove the first day of the array cause it's yesterday
+                array.remove(at: 0)
+                completion(array)
             }
-            print(responseJSON)
-            let date = NSDate(timeIntervalSince1970: responseJSON.daily[1].dt)
-            let formatter = DateFormatter()
-            formatter.dateFormat = "E"
-            print(formatter.string(from: date as Date))
         }
         task.resume()
     }

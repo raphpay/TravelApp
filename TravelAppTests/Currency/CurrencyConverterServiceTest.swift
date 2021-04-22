@@ -15,7 +15,7 @@ class CurrencyConverterServiceTest: XCTestCase {
         let currencyService = CurrencyConverterService(session: fakeSession)
         
         // When
-        let expectation = XCTestExpectation(description: "Wait for queue change")
+        let expectation = XCTestExpectation(description: "testGetCurrencyRateFailedCallbackIfError")
         currencyService.getRate(from: .euro, to: .usDollar) { (_value, success) in
             // Then
             XCTAssertFalse(success)

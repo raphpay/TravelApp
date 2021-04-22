@@ -47,10 +47,10 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(icon: UIImage, degrees: String, time: String) {
+    public func configure(icon: UIImage, degrees: Double, time: String) {
         // TODO: Verify the type of the parameters with the conversion from the API
         weatherImage.image = icon
-        degreesLabel.text = degrees
+        degreesLabel.text = "\(degrees)"
         dateLabel.text = time
     }
     

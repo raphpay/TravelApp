@@ -74,21 +74,24 @@ class WeatherVC : UIViewController {
     private let clearRange = 800
     private let cloudRange = 801...804
     
+    var destinationWeatherObjects: [WeatherCardObject] = []
+    
     
     // MARK: - Override Methods
     override func viewDidLoad() {
         title = "Weather"
         configureCollectionViews()
         WeatherService.shared.getCurrentWeather(in: .newYork) { weatherID, temperature in
-            self.convertIcon(id: weatherID, for: self.destinationImageView)
+            self.destinationImageView.image =  self.convertIcon(id: weatherID)
             self.destinationTemperatureLabel.text = "\(temperature)°C"
         }
         WeatherService.shared.getCurrentWeather(in: .local) { weatherID, temperature in
-            self.convertIcon(id: weatherID, for: self.localImageView)
+            self.localImageView.image = self.convertIcon(id: weatherID)
             self.localTemperatureLabel.text = "\(temperature)°C"
         }
-        WeatherService.shared.getDailyWeather(in: .newYork) { (weatherID, temperature) in
-            //
+        WeatherService.shared.getDailyWeather(in: .newYork) { (weatherObjects) in
+            self.destinationWeatherObjects = weatherObjects
+            self.destinationCollectionView.reloadData()
         }
     }
     
@@ -138,27 +141,29 @@ class WeatherVC : UIViewController {
         localCollectionView.delegate = self
         localCollectionView.dataSource = self
     }
-    private func convertIcon(id: Int, for image: UIImageView) {
-
+    private func convertIcon(id: Int) -> UIImage {
+        var icon = UIImage()
         if thunderstormRange.contains(id) {
-            image.image = UIImage(named: WeatherIcons.thunderstorm.rawValue)
+            icon = UIImage(named: WeatherIcons.thunderstorm.rawValue)!
         } else if drizzleRange.contains(id){
-            image.image = UIImage(named: WeatherIcons.drizzle.rawValue)
+            icon = UIImage(named: WeatherIcons.drizzle.rawValue)!
         } else if rainRange.contains(id) {
-            image.image = UIImage(named: WeatherIcons.rain.rawValue)
+            icon = UIImage(named: WeatherIcons.rain.rawValue)!
         } else if snowRange.contains(id) {
-            image.image = UIImage(named: WeatherIcons.snow.rawValue)
+            icon = UIImage(named: WeatherIcons.snow.rawValue)!
         } else if id == smokeRange {
-            image.image = UIImage(named: WeatherIcons.smoke.rawValue)
+            icon = UIImage(named: WeatherIcons.smoke.rawValue)!
         } else if id == fogRange {
-            image.image = UIImage(named: WeatherIcons.fog.rawValue)
+            icon = UIImage(named: WeatherIcons.fog.rawValue)!
         } else if id == clearRange {
-            image.image = UIImage(named: WeatherIcons.clear.rawValue)
+            icon = UIImage(named: WeatherIcons.clear.rawValue)!
         } else if cloudRange.contains(id) {
-            image.image = UIImage(named: WeatherIcons.cloud.rawValue)
+            icon = UIImage(named: WeatherIcons.cloud.rawValue)!
         } else {
-            image.image = UIImage(named: WeatherIcons.clear.rawValue)
+            icon = UIImage(named: WeatherIcons.clear.rawValue)!
         }
+        
+        return icon
     }
 }
 
@@ -166,17 +171,22 @@ class WeatherVC : UIViewController {
 // MARK: - Collection View
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        if collectionView == destinationCollectionView {
+            return destinationWeatherObjects.count
+        } else {
+            return 7
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == destinationCollectionView {
             let destinationCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
-            destinationCell.configure(icon: UIImage(named: "cloud.rain.fill")!, degrees: "\(indexPath.item)", time: "dest")
+            let object = destinationWeatherObjects[indexPath.item]
+            destinationCell.configure(icon: convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
             return destinationCell
         } else {
             let localCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
-            localCell.configure(icon: UIImage(named: "cloud.rain.fill")!, degrees: "\(indexPath.item)", time: "Local")
+//            localCell.configure(icon: UIImage(named: "cloud.rain.fill")!, degrees: "\(indexPath.item)", time: "Local")
             return localCell
         }
     }
