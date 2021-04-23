@@ -8,7 +8,6 @@
 import Foundation
 
 class FakeCurrencyResponseData {
-    // On met une URL au hasard, car ici on ne s'intéresse ici qu'au code HTTP, c'est la seule chose que l'on contrôle.
     static var currencyCorrectData: Data  {
         let bundle = Bundle(for: FakeCurrencyResponseData.self)
         let url = bundle.url(forResource: "Currency", withExtension: "json")!
@@ -17,7 +16,8 @@ class FakeCurrencyResponseData {
     }
     
     static let currencyIncorrectData = "erreur".data(using: .utf8)!
-    
+
+    // We put a random URL because we only need the HTTP status code
     static let responseOK = HTTPURLResponse(url: URL(string: "https://apple.com")!,
                                             statusCode: 200,
                                             httpVersion: nil, headerFields: nil)

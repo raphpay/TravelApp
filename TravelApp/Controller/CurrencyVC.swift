@@ -7,20 +7,6 @@
 
 import UIKit
 
-enum CurrencyType {
-    case euro
-    case usDollar
-
-    var info: (code: String, symbol: String) {
-        switch self {
-        case .euro:
-            return ("EUR", "€")
-        case .usDollar:
-            return ("USD", "$")
-        }
-    }
-}
-
 class CurrencyVC : UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var marketOrderLabel: UILabel!
@@ -44,8 +30,6 @@ class CurrencyVC : UIViewController {
     
     // MARK: - Actions
     @IBAction func invertButtonTapped(_ sender: UIButton) {
-        // TODO : Convert 1€ to 1$ or vice-versa
-        // API subscriptions doesn't allow to convert from USD -> Remove the possibility to invert currency ?
         if baseCurrency == .euro {
             convertUITo(.usDollar, from: .euro)
             CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
@@ -64,20 +48,7 @@ class CurrencyVC : UIViewController {
             }
         }
     }
-    
-    private func convertUITo(_ baseCurrency: CurrencyType, from currency: CurrencyType) {
-        // First part
-        firstCurrencyLabel.text = baseCurrency.info.code
-        firstTextField.placeholder = "1\(baseCurrency.info.symbol)"
-        // Second part
-        secondCurrencyLabel.text = currency.info.code
-        secondTextField.placeholder = "1\(currency.info.symbol)"
-        // Button
-        convertButton.setTitle("Convert \(baseCurrency.info.code) to \(currency.info.code)", for: .normal)
-    }
-    
-    
-    // MARK: - Actions
+
     @IBAction func firstTextFieldDidBegin(_ sender: Any) {
         firstTextFieldIsOpen = true
         secondTextFieldIsOpen = false
@@ -147,6 +118,17 @@ class CurrencyVC : UIViewController {
               let value = Double(text) else { return nil }
         return value
     }
+    
+    private func convertUITo(_ baseCurrency: CurrencyType, from currency: CurrencyType) {
+        // First part
+        firstCurrencyLabel.text = baseCurrency.info.code
+        firstTextField.placeholder = "1\(baseCurrency.info.symbol)"
+        // Second part
+        secondCurrencyLabel.text = currency.info.code
+        secondTextField.placeholder = "1\(currency.info.symbol)"
+        // Button
+        convertButton.setTitle("Convert \(baseCurrency.info.code) to \(currency.info.code)", for: .normal)
+    }
 }
 
 
@@ -181,6 +163,7 @@ extension CurrencyVC : UITextFieldDelegate {
         
     }
 
+    // TODO : Use this code with translate part
 //    func textViewDidEndEditing(_ textView: UITextView) {
 //            if noteText.text == "" {
 //                noteText.textColor = greyColorPlaceholder

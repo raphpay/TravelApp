@@ -8,9 +8,16 @@
 import Foundation
 
 
+
+// MARK: - UI Objects
+struct WeatherCardObject {
+    let date: String
+    let temperature: Double
+    let iconId: Int
+}
+
 // MARK: - Top layers
 struct CurrentWeather: Decodable {
-    let timezone: String
     let current : CurrentInfo
 }
 
@@ -26,7 +33,6 @@ struct HourlyWeather: Decodable {
 
 // MARK: - Second Layers
 struct CurrentInfo: Decodable {
-    let dt: Double
     let temp: Double
     let weather: [WeatherInfo]
 }

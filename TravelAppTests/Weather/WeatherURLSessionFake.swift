@@ -1,13 +1,16 @@
 //
-//  URLSessionFake.swift
+//  WeatherURLSessionFake.swift
 //  TravelAppTests
 //
-//  Created by Raphaël Payet on 18/04/2021.
+//  Created by Raphaël Payet on 23/04/2021.
 //
 
 import Foundation
 
-class CurrencyURLSessionFake : URLSession {
+
+import Foundation
+
+class WeatherURLSessionFake : URLSession {
     var data: Data?
     var response: URLResponse?
     var error: Error?
@@ -19,7 +22,7 @@ class CurrencyURLSessionFake : URLSession {
     }
     
     override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        let task = CurrencyURLSessionDataTaskFake() // TODO : Find how this method is now implemented
+        let task = WeatherURLSessionDataTaskFake() // TODO : Find how this method is now implemented
         task.completionHandler = completionHandler
         task.data = data
         task.urlResponse = response
@@ -28,7 +31,7 @@ class CurrencyURLSessionFake : URLSession {
     }
 }
 
-class CurrencyURLSessionDataTaskFake : URLSessionDataTask {
+class WeatherURLSessionDataTaskFake : URLSessionDataTask {
     var completionHandler: ((Data? , URLResponse?, Error?) -> Void)?
     var data: Data?
     var urlResponse: URLResponse?
