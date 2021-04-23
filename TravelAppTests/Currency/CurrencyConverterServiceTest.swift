@@ -9,9 +9,9 @@ import XCTest
 @testable import TravelApp
 
 class CurrencyConverterServiceTest: XCTestCase {
-    func testGetCurrencyRateFailedCallbackIfError() {
+    func testGetCurrencyRateFailedWithError() {
         // Given
-        let fakeSession = URLSessionFake(data: nil, response: nil, error: FakeCurrencyResponseData.error)
+        let fakeSession = CurrencyURLSessionFake(data: nil, response: nil, error: FakeCurrencyResponseData.error)
         let currencyService = CurrencyConverterService(session: fakeSession)
         
         // When
@@ -26,9 +26,9 @@ class CurrencyConverterServiceTest: XCTestCase {
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetCurrencyRateFailedCallbackIfNoData() {
+    func testGetCurrencyRateFailedWithoutData() {
         // Give
-        let fakeSession = URLSessionFake(data: nil, response: FakeCurrencyResponseData.responseOK, error: nil)
+        let fakeSession = CurrencyURLSessionFake(data: nil, response: FakeCurrencyResponseData.responseOK, error: nil)
         let currencyService = CurrencyConverterService(session: fakeSession)
         
         // When
@@ -43,9 +43,9 @@ class CurrencyConverterServiceTest: XCTestCase {
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetCurrencyRateFailedCallbackIfIncorrectData() {
+    func testGetCurrencyRateFailedWithIncorrectData() {
         // Given
-        let fakeSession = URLSessionFake(data: FakeCurrencyResponseData.currencyIncorrectData,
+        let fakeSession = CurrencyURLSessionFake(data: FakeCurrencyResponseData.currencyIncorrectData,
                                          response: FakeCurrencyResponseData.responseOK, error: nil)
         let currencyService = CurrencyConverterService(session: fakeSession)
         
@@ -61,9 +61,9 @@ class CurrencyConverterServiceTest: XCTestCase {
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetCurrencyRateFailedCallbackIfIncorrectResponse() {
+    func testGetCurrencyRateFailedWithIncorrectResponse() {
         // Given
-        let fakeSession = URLSessionFake(data: FakeCurrencyResponseData.currencyCorrectData,
+        let fakeSession = CurrencyURLSessionFake(data: FakeCurrencyResponseData.currencyCorrectData,
                                          response: FakeCurrencyResponseData.responseNotOK, error: nil)
         let currencyService = CurrencyConverterService(session: fakeSession)
         
@@ -78,9 +78,9 @@ class CurrencyConverterServiceTest: XCTestCase {
         wait(for: [expectation], timeout: 0.01)
     }
     
-    func testGetCurrencyRateSuccessCallback() {
+    func testGetCurrencyRateSuccessCompletion() {
         // Given
-        let fakeSession = URLSessionFake(data: FakeCurrencyResponseData.currencyCorrectData,
+        let fakeSession = CurrencyURLSessionFake(data: FakeCurrencyResponseData.currencyCorrectData,
                                          response: FakeCurrencyResponseData.responseOK, error: nil)
         let currencyService = CurrencyConverterService(session: fakeSession)
         

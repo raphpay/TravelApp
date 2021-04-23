@@ -97,7 +97,6 @@ class WeatherService {
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(city.latitude)" + "&lon=\(city.longitude)" + "&exclude=\(period.excludeOptions)"
         let url = URL(string: completeStringURL)!
         let request = URLRequest(url: url)
-        let session = URLSession(configuration: .default)
         task?.cancel()
         task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
@@ -110,7 +109,10 @@ class WeatherService {
                     return
                 }
                 guard let response = _response as? HTTPURLResponse,
-                      response.statusCode == 200 else { return }
+                      response.statusCode == 200 else {
+                    completion(false, nil)
+                    return
+                }
                 
                 switch period {
                     case .current:
@@ -150,7 +152,7 @@ class WeatherService {
                                                   iconId: weatherID)
             array.append(weatherObject)
         }
-        // Remove the first day of the array cause it's yesterday
+        // Here, we remove the first day of the array cause it's yesterday
         array.remove(at: 0)
         completion(true, array)
     }

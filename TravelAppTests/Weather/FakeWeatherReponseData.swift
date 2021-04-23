@@ -11,22 +11,22 @@ class FakeWeatherResponseData {
     
     static var currentWeatherCorrectData: Data {
         let bundle = Bundle(for: FakeWeatherResponseData.self)
-        let url = bundle.url(forResource: "CurrentWeather", withExtension: "json")!
-        let data = try! Data(contentsOf: url)
+        let url = bundle.url(forResource: "CurrentWeather", withExtension: "json")
+        let data = try! Data(contentsOf: url!)
         return data
     }
     
     static var dailyWeatherCorrectData: Data {
         let bundle = Bundle(for: FakeWeatherResponseData.self)
-        let url = bundle.url(forResource: "DailyWeather", withExtension: "json")!
-        let data = try! Data(contentsOf: url)
+        let url = bundle.url(forResource: "DailyWeather", withExtension: "json")
+        let data = try! Data(contentsOf: url!)
         return data
     }
     
     static var hourlyWeatherCorrectData: Data {
         let bundle = Bundle(for: FakeWeatherResponseData.self)
-        let url = bundle.url(forResource: "HourlyWeather", withExtension: "json")!
-        let data = try! Data(contentsOf: url)
+        let url = bundle.url(forResource: "HourlyWeather", withExtension: "json")
+        let data = try! Data(contentsOf: url!)
         return data
     }
     
