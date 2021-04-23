@@ -18,7 +18,6 @@ struct WeatherCardObject {
 
 // MARK: - Top layers
 struct CurrentWeather: Decodable {
-    let timezone: String
     let current : CurrentInfo
 }
 
@@ -34,7 +33,6 @@ struct HourlyWeather: Decodable {
 
 // MARK: - Second Layers
 struct CurrentInfo: Decodable {
-    let dt: Double
     let temp: Double
     let weather: [WeatherInfo]
 }

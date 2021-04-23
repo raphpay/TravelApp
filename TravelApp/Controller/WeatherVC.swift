@@ -35,14 +35,18 @@ class WeatherVC : UIViewController {
         if destinationDisplay == .week {
             destinationDisplay = .today
             destinationToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
-            WeatherService.shared.getHourlyWeather(in: .newYork) { (objects) in
+            WeatherService.shared.getWeather(in: .newYork, for: .hour) { (success, _objects) in
+                guard success,
+                      let objects = _objects else { return }
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
             }
         } else {
             destinationDisplay = .week
             destinationToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
-            WeatherService.shared.getDailyWeather(in: .newYork) { (objects) in
+            WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
+                guard success,
+                      let objects = _objects else { return }
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
             }
@@ -52,14 +56,18 @@ class WeatherVC : UIViewController {
         if localDisplay == .week {
             localDisplay = .today
             localToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
-            WeatherService.shared.getHourlyWeather(in: .local) { (objects) in
+            WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
+                guard success,
+                      let objects = _objects else { return }
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
             }
         } else {
             localDisplay = .week
             localToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
-            WeatherService.shared.getDailyWeather(in: .local) { (objects) in
+            WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
+                guard success,
+                      let objects = _objects else { return }
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
             }
@@ -92,23 +100,30 @@ class WeatherVC : UIViewController {
         title = "Weather"
         configureCollectionViews()
         // Big weather
-        WeatherService.shared.getCurrentWeather(in: .newYork) { weatherID, temperature in
-            self.destinationImageView.image =  self.convertIcon(id: weatherID)
-            self.destinationTemperatureLabel.text = "\(temperature)°C"
+        WeatherService.shared.getWeather(in: .newYork, for: .current) { (success, _objects) in
+            guard success,
+                  let objects = _objects else { return }
+            self.destinationImageView.image =  self.convertIcon(id: objects[0].iconId)
+            self.destinationTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
-        WeatherService.shared.getCurrentWeather(in: .local) { weatherID, temperature in
-            self.localImageView.image = self.convertIcon(id: weatherID)
-            self.localTemperatureLabel.text = "\(temperature)°C"
+        WeatherService.shared.getWeather(in: .local, for: .current) { (success, _objects) in
+            guard success,
+                  let objects = _objects else { return }
+            self.localImageView.image =  self.convertIcon(id: objects[0].iconId)
+            self.localTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
         // Collection views
-        WeatherService.shared.getDailyWeather(in: .newYork) { (weatherObjects) in
-            self.destinationWeatherObjects = weatherObjects
+        WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
+            guard success,
+                let objects = _objects else { return }
+            self.destinationWeatherObjects = objects
             self.destinationCollectionView.reloadData()
         }
-        
-        WeatherService.shared.getDailyWeather(in: .local) { (weatherObjects) in
-            self.localWeatherObjects = weatherObjects
+        WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
+            guard success,
+                let objects = _objects else { return }
+            self.localWeatherObjects = objects
             self.localCollectionView.reloadData()
         }
     }

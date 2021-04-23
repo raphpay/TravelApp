@@ -23,6 +23,10 @@ let CURRENCY_JSON = """
     }
     """
 
+
+// TODO : Fix button to keyboard
+// TODO : Terminer switch conversion
+
 class CurrencyConverterService {
     static var shared = CurrencyConverterService()
     private init() {}
@@ -46,14 +50,24 @@ class CurrencyConverterService {
         task?.cancel()
         task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
-                guard _error == nil else { return }
-                guard let data = _data else { return }
+                guard _error == nil else {
+                    completionHandler(nil, false)
+                    return
+                }
+                guard let data = _data else {
+                    completionHandler(nil, false)
+                    return
+                }
                 guard let response = _response as? HTTPURLResponse,
-                      response.statusCode == 200 else { return }
+                      response.statusCode == 200 else {
+                    completionHandler(nil, false)
+                    return
+                }
                 guard let responseJSON = try? JSONDecoder().decode(Currency.self, from: data) else {
                     completionHandler(nil, false)
                     return
                 }
+                // Success here
                 let USDRate = responseJSON.rates.USD
                 if base == .euro {
                     completionHandler(USDRate, true)
