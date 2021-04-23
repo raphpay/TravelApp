@@ -103,13 +103,13 @@ class WeatherVC : UIViewController {
         WeatherService.shared.getWeather(in: .newYork, for: .current) { (success, _objects) in
             guard success,
                   let objects = _objects else { return }
-            self.destinationImageView.image =  self.convertIcon(id: objects[0].iconId)
+            self.destinationImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.destinationTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         WeatherService.shared.getWeather(in: .local, for: .current) { (success, _objects) in
             guard success,
                   let objects = _objects else { return }
-            self.localImageView.image =  self.convertIcon(id: objects[0].iconId)
+            self.localImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.localTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
@@ -174,30 +174,6 @@ class WeatherVC : UIViewController {
         localCollectionView.delegate = self
         localCollectionView.dataSource = self
     }
-    private func convertIcon(id: Int) -> UIImage {
-        var icon = UIImage()
-        if thunderstormRange.contains(id) {
-            icon = UIImage(named: WeatherIcons.thunderstorm.rawValue)!
-        } else if drizzleRange.contains(id){
-            icon = UIImage(named: WeatherIcons.drizzle.rawValue)!
-        } else if rainRange.contains(id) {
-            icon = UIImage(named: WeatherIcons.rain.rawValue)!
-        } else if snowRange.contains(id) {
-            icon = UIImage(named: WeatherIcons.snow.rawValue)!
-        } else if id == smokeRange {
-            icon = UIImage(named: WeatherIcons.smoke.rawValue)!
-        } else if id == fogRange {
-            icon = UIImage(named: WeatherIcons.fog.rawValue)!
-        } else if id == clearRange {
-            icon = UIImage(named: WeatherIcons.clear.rawValue)!
-        } else if cloudRange.contains(id) {
-            icon = UIImage(named: WeatherIcons.cloud.rawValue)!
-        } else {
-            icon = UIImage(named: WeatherIcons.clear.rawValue)!
-        }
-        
-        return icon
-    }
 }
 
 
@@ -215,12 +191,12 @@ extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == destinationCollectionView {
             let destinationCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
             let object = destinationWeatherObjects[indexPath.item]
-            destinationCell.configure(icon: convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
+            destinationCell.configure(icon: WeatherService.shared.convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
             return destinationCell
         } else {
             let localCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
             let object = localWeatherObjects[indexPath.item]
-            localCell.configure(icon: convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
+            localCell.configure(icon: WeatherService.shared.convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
             return localCell
         }
     }
