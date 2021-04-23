@@ -85,13 +85,21 @@ class WeatherService {
     private var excludeOptions: String = ""
     private var array = [WeatherCardObject]()
     
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+
+    init(session: URLSession) {
+        self.session = session
+    }
+    
     // MARK: - Public functions
     func getWeather(in city: City, for period: TimePeriod, completion: @escaping ((_ success: Bool, _ weatherObject: [WeatherCardObject]?) -> Void)) {
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(city.latitude)" + "&lon=\(city.longitude)" + "&exclude=\(period.excludeOptions)"
         let url = URL(string: completeStringURL)!
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: request) { _data, _response, _error in
+        task?.cancel()
+        task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
                 guard _error == nil else {
                     completion(false, nil)
@@ -120,7 +128,7 @@ class WeatherService {
                 }
             }
         }
-        task.resume()
+        task?.resume()
     }
     
     
