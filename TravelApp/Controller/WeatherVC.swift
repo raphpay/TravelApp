@@ -16,7 +16,6 @@ enum ButtonTitle: String {
 
 class WeatherVC : UIViewController {
     
-    
     // MARK: - Outlets
     @IBOutlet weak var destinationImageView: UIImageView!
     @IBOutlet weak var destinationTemperatureLabel: UILabel!
@@ -75,21 +74,11 @@ class WeatherVC : UIViewController {
     }
     
     
-    
     // MARK: - Properties
     private var destinationCollectionView: UICollectionView! = nil
     private var localCollectionView: UICollectionView! = nil
     private var destinationDisplay : ButtonTitle = .week
     private var localDisplay : ButtonTitle = .week
-    
-    private let thunderstormRange = 200...232
-    private let drizzleRange = 300...321
-    private let rainRange = 500...531
-    private let snowRange = 600...622
-    private let smokeRange = 711
-    private let fogRange = 741
-    private let clearRange = 800
-    private let cloudRange = 801...804
     
     var destinationWeatherObjects: [WeatherCardObject] = []
     var localWeatherObjects: [WeatherCardObject] = []
