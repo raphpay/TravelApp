@@ -7,27 +7,28 @@
 
 import Foundation
 
-let CURRENCY_JSON = """
-    {
-      "success": true,
-      "timestamp": 1617943986,
-      "base": "EUR",
-      "date": "2021-04-09",
-      "rates": {
-        "USD": 1.190526,
-        "AUD": 1.559713,
-        "CAD": 1.496622,
-        "PLN": 4.545487,
-        "MXN": 23.971427
-      }
-    }
-    """
-
-
 // TODO : Fix button to keyboard
 // TODO : Terminer switch conversion
 
+// MARK: - Enumeration
+enum CurrencyType {
+    case euro
+    case usDollar
+
+    var info: (code: String, symbol: String) {
+        switch self {
+        case .euro:
+            return ("EUR", "€")
+        case .usDollar:
+            return ("USD", "$")
+        }
+    }
+}
+
+
 class CurrencyConverterService {
+    
+    // MARK: - Properties
     static var shared = CurrencyConverterService()
     private init() {}
     
@@ -41,8 +42,9 @@ class CurrencyConverterService {
         self.session = session
     }
     
+    
+    // MARK: - Public Methods
     func getRate(from base: CurrencyType, to rate: CurrencyType, completionHandler: @escaping ((_ rate: Double?, _ success: Bool) -> Void)) {
-        // The reason of the failed tests ?
         guard let request = createRequest() else {
             completionHandler(nil, false)
             return
@@ -67,7 +69,6 @@ class CurrencyConverterService {
                     completionHandler(nil, false)
                     return
                 }
-                // Success here
                 let USDRate = responseJSON.rates.USD
                 if base == .euro {
                     completionHandler(USDRate, true)
@@ -80,13 +81,12 @@ class CurrencyConverterService {
         task?.resume()
     }
     
+    
+    // MARK: - Helper Methods
     private func createRequest() -> URLRequest? {
         let completeEndPoint = "\(baseURL)\(ACCESS_KEY)&base=\(CurrencyType.euro.info.code)&symbols=\(CurrencyType.usDollar.info.code)"
         let url = URL(string: completeEndPoint)!
         let request = URLRequest(url: url)
         return request
     }
-    
-    
-    
 }
