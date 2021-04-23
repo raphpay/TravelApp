@@ -5,8 +5,10 @@
 //  Created by Raphaël Payet on 12/04/2021.
 //
 
-import Foundation
+import UIKit
 
+
+// MARK: - Enumerations
 enum TimePeriod {
     case day, hour, current
     
@@ -44,10 +46,34 @@ enum City {
     }
 }
 
-
-//exempleCall = "https://api.openweathermap.org/data/2.5/onecall?appid=d92d5ad479ad8dc13ee9cd7c4739939d&lat=40.7143&lon=-74.006&exclude=hourly,minutely,alerts,daily"
+enum WeatherRange {
+    case thunderstorm, drizzle, rain, snow, smoke, fog, clear, cloud
+    
+    var range: ClosedRange<Int> {
+        switch self {
+        case .thunderstorm:
+            return 200...232
+        case .drizzle:
+            return 300...321
+        case .rain:
+            return 500...531
+        case .snow:
+            return 600...622
+        case .smoke:
+            return 711...711
+        case .fog:
+            return 741...741
+        case .clear:
+            return 800...800
+        case .cloud:
+            return 801...804
+        }
+    }
+}
 
 class WeatherService {
+    
+    // MARK: - Properties
     static var shared = WeatherService()
     private init() {}
     private let API_KEY = "d92d5ad479ad8dc13ee9cd7c4739939d"
@@ -59,8 +85,7 @@ class WeatherService {
     private var excludeOptions: String = ""
     private var array = [WeatherCardObject]()
     
-    // TODO : Create a function to format date
-    
+    // MARK: - Public functions
     func getWeather(in city: City, for period: TimePeriod, completion: @escaping ((_ success: Bool, _ weatherObject: [WeatherCardObject]?) -> Void)) {
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(city.latitude)" + "&lon=\(city.longitude)" + "&exclude=\(period.excludeOptions)"
         let url = URL(string: completeStringURL)!
@@ -98,6 +123,8 @@ class WeatherService {
         task.resume()
     }
     
+    
+    // MARK: - Decoding Methods
     private func decodeDailyWeather(data: Data?, completion: @escaping ((_ success: Bool, _ weatherObjects: [WeatherCardObject]?) -> Void)) {
         guard let data = data,
                 let responseJSON = try? JSONDecoder().decode(DailyWeather.self, from: data) else {
@@ -105,15 +132,12 @@ class WeatherService {
             return
         }
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E"
         for day in responseJSON.daily {
-            let dayDate = NSDate(timeIntervalSince1970: day.dt)
-            let currentDate = formatter.string(from: dayDate as Date)
+            let displayableDate = format(date: NSDate(timeIntervalSince1970: day.dt), to: "E")
             let kelvinTemperature = day.temp.day
             let temperature = kelvinTemperature.convertFromKelvinToCelsius().round(to: 0)
             let weatherID = day.weather[0].id
-            let weatherObject = WeatherCardObject(date: currentDate,
+            let weatherObject = WeatherCardObject(date: displayableDate,
                                                   temperature: temperature,
                                                   iconId: weatherID)
             array.append(weatherObject)
@@ -130,13 +154,9 @@ class WeatherService {
             return
         }
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH"
-        
         for item in 0..<7 {
             let hour = responseJSON.hourly[item]
-            let hourDate = NSDate(timeIntervalSince1970: hour.dt)
-            let displayableDate = formatter.string(from: hourDate as Date)
+            let displayableDate = format(date: NSDate(timeIntervalSince1970: hour.dt), to: "HH")
             let kelvinTemperature = hour.temp
             let displayableTemp = kelvinTemperature.convertFromKelvinToCelsius().round(to: 0)
             let weatherID = hour.weather[0].id
@@ -159,5 +179,39 @@ class WeatherService {
         let convertedTemperature = temperatureInKelvin.convertFromKelvinToCelsius().round(to: 0)
         let object = [WeatherCardObject(date: "", temperature: convertedTemperature, iconId: weatherID)]
         completion(true, object)
+    }
+    
+    
+    // MARK: - Conversion Methods
+    private func format(date: NSDate, to stringFormat: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = stringFormat
+        return formatter.string(from: date as Date)
+    }
+    
+    func convertIcon(id: Int) -> UIImage {
+        var icon = UIImage()
+        
+        if WeatherRange.thunderstorm.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.thunderstorm.rawValue)!
+        } else if WeatherRange.drizzle.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.drizzle.rawValue)!
+        } else if WeatherRange.rain.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.rain.rawValue)!
+        } else if WeatherRange.snow.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.snow.rawValue)!
+        } else if WeatherRange.smoke.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.smoke.rawValue)!
+        } else if WeatherRange.fog.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.fog.rawValue)!
+        } else if WeatherRange.clear.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.clear.rawValue)!
+        } else if WeatherRange.cloud.range.contains(id) {
+            icon = UIImage(named: WeatherIcons.cloud.rawValue)!
+        } else {
+            icon = UIImage(named: WeatherIcons.clear.rawValue)!
+        }
+        
+        return icon
     }
 }
