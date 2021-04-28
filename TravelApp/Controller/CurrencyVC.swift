@@ -38,6 +38,13 @@ class CurrencyVC : UIViewController {
                 guard let value = _value else { return }
                 let roundedValue = value.round(to: 3)
                 self.marketOrderLabel.text = "Market order : 1\(CurrencyType.usDollar.info.symbol) = \(roundedValue)\(CurrencyType.euro.info.symbol)"
+                if let firstText = self.firstTextField.text,
+                   !firstText.isEmpty,
+                   let textValue = Double(firstText) {
+                    let calculatedValue = roundedValue * textValue // Cross product
+                    let calculatedRoundValue = calculatedValue.round(to: 3)
+                    self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
+                }
             }
             baseCurrency = .usDollar
         } else {
@@ -47,6 +54,13 @@ class CurrencyVC : UIViewController {
                 guard let value = _value else { return }
                 let roundedValue = value.round(to: 3)
                 self.marketOrderLabel.text = "Market order : 1\(CurrencyType.euro.info.symbol) = \(roundedValue)\(CurrencyType.usDollar.info.symbol)"
+                if let firstText = self.firstTextField.text,
+                   !firstText.isEmpty,
+                   let textValue = Double(firstText) {
+                    let calculatedValue = roundedValue * textValue // Cross product
+                    let calculatedRoundValue = calculatedValue.round(to: 3)
+                    self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.euro.info.symbol)"
+                }
             }
         }
     }
