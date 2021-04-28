@@ -37,6 +37,7 @@ class WeatherVC : UIViewController {
             WeatherService.shared.getWeather(in: .newYork, for: .hour) { (success, _objects) in
                 guard success,
                       let objects = _objects else { return }
+                self.destinationWeatherObjects = []
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
             }
@@ -46,6 +47,7 @@ class WeatherVC : UIViewController {
             WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
                 guard success,
                       let objects = _objects else { return }
+                self.destinationWeatherObjects = []
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
             }
@@ -58,6 +60,7 @@ class WeatherVC : UIViewController {
             WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
                 guard success,
                       let objects = _objects else { return }
+                self.localWeatherObjects = []
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
             }
@@ -67,6 +70,7 @@ class WeatherVC : UIViewController {
             WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
                 guard success,
                       let objects = _objects else { return }
+                self.localWeatherObjects = []
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
             }
@@ -114,6 +118,10 @@ class WeatherVC : UIViewController {
                 let objects = _objects else { return }
             self.localWeatherObjects = objects
             self.localCollectionView.reloadData()
+        }
+        WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
+            guard success, let objects = _objects else { return }
+//            print(objects)
         }
     }
     

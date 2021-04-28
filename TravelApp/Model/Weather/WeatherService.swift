@@ -97,11 +97,11 @@ class WeatherService {
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(city.latitude)" + "&lon=\(city.longitude)" + "&exclude=\(period.excludeOptions)"
         let url = URL(string: completeStringURL)!
         let request = URLRequest(url: url)
-        task?.cancel()
         task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
                 guard _error == nil else {
                     completion(false, nil)
+                    print("Error : \(_error!.localizedDescription)")
                     return
                 }
                 guard let data = _data else {
@@ -141,7 +141,7 @@ class WeatherService {
             completion(false, nil)
             return
         }
-        
+        array = []
         for day in responseJSON.daily {
             let displayableDate = format(date: NSDate(timeIntervalSince1970: day.dt), to: "E")
             let kelvinTemperature = day.temp.day
@@ -164,6 +164,7 @@ class WeatherService {
             return
         }
         
+        array = []
         for item in 0..<7 {
             let hour = responseJSON.hourly[item]
             let displayableDate = format(date: NSDate(timeIntervalSince1970: hour.dt), to: "HH")
@@ -183,6 +184,7 @@ class WeatherService {
             completion(false, nil)
             return
         }
+        array = []
         let weatherID = responseJSON.current.weather[0].id
         let temperatureInKelvin = responseJSON.current.temp
         // TODO : Get a rounded Int

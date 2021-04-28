@@ -9,6 +9,7 @@ import XCTest
 @testable import TravelApp
 
 class CurrencyConverterServiceTest: XCTestCase {
+    
     func testGetCurrencyRateFailedWithError() {
         // Given
         let fakeSession = CurrencyURLSessionFake(data: nil, response: nil, error: FakeCurrencyResponseData.error)
