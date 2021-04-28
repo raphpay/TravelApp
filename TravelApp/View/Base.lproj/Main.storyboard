@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbJ-Pm-kta">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-cR-3Ia">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="810"/>
@@ -288,6 +288,7 @@
                     <navigationItem key="navigationItem" id="md0-8Y-6cJ"/>
                     <connections>
                         <outlet property="convertButton" destination="XcP-W3-rE4" id="3km-kK-uVA"/>
+                        <outlet property="convertButtonBottomConstraint" destination="kAq-wk-l9k" id="k7S-bI-dLe"/>
                         <outlet property="firstContainerView" destination="iiM-iT-IbW" id="pMp-v2-DVK"/>
                         <outlet property="firstCurrencyLabel" destination="dDg-de-3Z7" id="3Of-J5-goX"/>
                         <outlet property="firstTextField" destination="zp4-3X-rCY" id="Jkv-bB-4Xk"/>

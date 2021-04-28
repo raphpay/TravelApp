@@ -17,6 +17,7 @@ class CurrencyVC : UIViewController {
     @IBOutlet weak var secondCurrencyLabel: UILabel!
     @IBOutlet weak var secondTextField: UITextField!
     @IBOutlet weak var convertButton: UIButton!
+    @IBOutlet weak var convertButtonBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Properties
     lazy private var textFields : [UITextField] = [firstTextField, secondTextField]
@@ -27,6 +28,7 @@ class CurrencyVC : UIViewController {
     var secondValue: Double = 0
     var euroValue: Double = 1
     var usDollarValue: Double = 1
+    
     
     // MARK: - Actions
     @IBAction func invertButtonTapped(_ sender: UIButton) {
@@ -92,6 +94,19 @@ class CurrencyVC : UIViewController {
             let roundedValue = value.round(to: 3)
             self.marketOrderLabel.text = "Market Order: \(self.euroValue)\(CurrencyType.euro.info.symbol) = \(roundedValue)\(CurrencyType.usDollar.info.symbol)"
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.convertButtonBottomConstraint.constant = keyboardSize.height - 60
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.convertButtonBottomConstraint.constant = 16
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
