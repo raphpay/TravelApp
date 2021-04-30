@@ -119,10 +119,6 @@ class WeatherVC : UIViewController {
             self.localWeatherObjects = objects
             self.localCollectionView.reloadData()
         }
-        WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
-            guard success, let objects = _objects else { return }
-//            print(objects)
-        }
     }
     
     

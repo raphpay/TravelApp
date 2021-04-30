@@ -560,6 +560,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Azn-fA-C5s"/>
                     <connections>
+                        <outlet property="containerView" destination="XnT-vC-Axw" id="vgc-mp-00S"/>
                         <outlet property="entryTextView" destination="9aJ-Pw-Hcm" id="3CW-zx-Qxw"/>
                         <outlet property="firstBackgroundView" destination="d6N-g1-JRI" id="fs7-05-3nk"/>
                         <outlet property="leftFlag" destination="YxF-aI-tBD" id="zia-MO-VLC"/>
