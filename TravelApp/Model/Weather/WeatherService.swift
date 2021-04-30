@@ -27,7 +27,7 @@ enum TimePeriod {
 enum City {
     case local, newYork
     
-    var latitude: Double{
+    var latitude: Double {
         switch self {
         case .local:
             return -21.1336
@@ -110,10 +110,12 @@ class WeatherService {
                 }
                 guard let response = _response as? HTTPURLResponse,
                       response.statusCode == 200 else {
+                    print("response not ok")
                     completion(false, nil)
                     return
                 }
                 
+
                 switch period {
                     case .current:
                         self.decodeCurrentWeather(data: data) { (success, objects) in

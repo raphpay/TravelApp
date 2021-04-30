@@ -33,7 +33,8 @@ class TranslationVC : UIViewController {
             
             baseLanguage = .english
             
-            
+            entryTextView.text = Language.english.textViewPlaceholder
+            translatedTextView.text = Language.french.textViewPlaceholder
         } else {
             leftFlag.image = Language.french.flag
             leftLanguageLabel.text = Language.french.displayText
@@ -42,13 +43,16 @@ class TranslationVC : UIViewController {
             rightLanguageLabel.text = Language.english.displayText
             
             baseLanguage = .french
+            
+            entryTextView.text = Language.french.textViewPlaceholder
+            translatedTextView.text = Language.english.textViewPlaceholder
         }
     }
     @IBAction func entryCopyButtonTapped(_ sender: UIButton) {
-        print("entryCopyButton")
+        copyToClipboard(from: entryTextView)
     }
     @IBAction func translatedTextCopyButtonTapped(_ sender: Any) {
-        print("translatedTextCopyButton")
+        copyToClipboard(from: translatedTextView)
     }
     
     @objc func closeKeyboard() {
@@ -61,18 +65,14 @@ class TranslationVC : UIViewController {
     
     // MARK: - Override methods
     override func viewDidLoad() {
+        // Ajouter un bouton pour cacher le clavier
         styleView()
         title = "Translate"
         entryTextView.delegate = self
+        entryTextView.textColor = UIColor(named: "placeholder")
         translatedTextView.delegate = self
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         containerView.addGestureRecognizer(tap)
-        
-        TranslationService.shared.getTranslation(baseText: "Hello World again", targetLanguage: Language.french.code) { (success, _translatedText) in
-            guard success,
-                  let translatedText = _translatedText else { return }
-            print(translatedText)
-        }
     }
     
     // MARK: - Private methods
@@ -80,11 +80,63 @@ class TranslationVC : UIViewController {
         firstBackgroundView.layer.cornerRadius = 10
         secondBackgroundView.layer.cornerRadius = 10
     }
+    
+    private func resetPlaceHolders(in textView : UITextView) {
+        if textView.text == "" {
+//            noteText.textColor = greyColorPlaceholder
+            textView.textColor = UIColor(named: "placeholder")
+            if baseLanguage == .french {
+                textView.text = Language.french.textViewPlaceholder
+            } else {
+                textView.text = Language.english.textViewPlaceholder
+            }
+        }
+    }
+    
+    private func translate(text: String) {
+        var targetLanguage = Language.english
+        if baseLanguage == .english {
+            targetLanguage = .french
+        } else {
+            targetLanguage = .english
+        }
+        
+        TranslationService.shared.getTranslation(baseText: text, targetLanguage: targetLanguage) { (success, _translatedText) in
+            guard success,
+                  let translatedText = _translatedText else {
+                return
+            }
+            self.translatedTextView.text = translatedText
+        }
+    }
+    
+    private func copyToClipboard(from textView: UITextView) {
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = ""
+        guard let textToCopy = textView.text else { return }
+        pasteboard.string = textToCopy
+    }
 }
 
 extension TranslationVC : UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.text = ""
+        textView.textColor = .black
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        guard let text = textView.text else { return }
+        translate(text: text)
         textView.resignFirstResponder()
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        resetPlaceHolders(in: textView)
+        textView.resignFirstResponder()
+        guard let text = textView.text else {
+            return false
+        }
+        translate(text: text)
         return true
     }
 }
