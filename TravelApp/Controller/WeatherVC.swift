@@ -99,6 +99,8 @@ class WeatherVC : UIViewController {
             self.destinationImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.destinationTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
+        
+        
         WeatherService.shared.getWeather(in: .local, for: .current) { (success, _objects) in
             guard success,
                   let objects = _objects else { return }
@@ -118,10 +120,6 @@ class WeatherVC : UIViewController {
                 let objects = _objects else { return }
             self.localWeatherObjects = objects
             self.localCollectionView.reloadData()
-        }
-        WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
-            guard success, let objects = _objects else { return }
-//            print(objects)
         }
     }
     

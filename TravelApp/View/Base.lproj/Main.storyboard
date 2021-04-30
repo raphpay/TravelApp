@@ -367,8 +367,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1r-YB-Mj4">
-                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="w1r-YB-Mj4">
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Y1J-hH-oBE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="782"/>
@@ -509,6 +509,9 @@
                                                         <state key="normal" image="􀐅">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="translatedTextCopyButtonTapped:" destination="itf-8F-mG2" eventType="touchUpInside" id="Mwa-5R-RRu"/>
+                                                        </connections>
                                                     </button>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Hello ! See the translated text here !" translatesAutoresizingMaskIntoConstraints="NO" id="Vqo-X0-j0e">
                                                         <rect key="frame" x="16" y="54" width="309" height="230"/>
@@ -560,6 +563,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Azn-fA-C5s"/>
                     <connections>
+                        <outlet property="containerView" destination="XnT-vC-Axw" id="vgc-mp-00S"/>
                         <outlet property="entryTextView" destination="9aJ-Pw-Hcm" id="3CW-zx-Qxw"/>
                         <outlet property="firstBackgroundView" destination="d6N-g1-JRI" id="fs7-05-3nk"/>
                         <outlet property="leftFlag" destination="YxF-aI-tBD" id="zia-MO-VLC"/>

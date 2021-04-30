@@ -97,8 +97,8 @@ class WeatherServiceTest: XCTestCase {
         let expectation = XCTestExpectation(description: "Correct Data")
         weatherService.getWeather(in: .local, for: .current) { (success, _objects) in
             // Then
-            XCTAssertTrue(success)
-            XCTAssertNotNil(_objects)
+            XCTAssertFalse(success)
+            XCTAssertNil(_objects)
             expectation.fulfill()
         }
         
