@@ -24,7 +24,25 @@ class TranslationVC : UIViewController {
     
     // MARK: - Actions
     @IBAction func translateButtonTapped(_ sender: UIButton) {
-        print("translateButtonTapped")
+        if baseLanguage == .french {
+            leftFlag.image = Language.english.flag
+            leftLanguageLabel.text = Language.english.displayText
+            
+            rightFlag.image = Language.french.flag
+            rightLanguageLabel.text = Language.french.displayText
+            
+            baseLanguage = .english
+            
+            
+        } else {
+            leftFlag.image = Language.french.flag
+            leftLanguageLabel.text = Language.french.displayText
+            
+            rightFlag.image = Language.english.flag
+            rightLanguageLabel.text = Language.english.displayText
+            
+            baseLanguage = .french
+        }
     }
     @IBAction func entryCopyButtonTapped(_ sender: UIButton) {
         print("entryCopyButton")
@@ -33,9 +51,13 @@ class TranslationVC : UIViewController {
         print("translatedTextCopyButton")
     }
     
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
     
     // MARK: - Properties
-    
+    var baseLanguage = Language.french
     
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -46,15 +68,11 @@ class TranslationVC : UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         containerView.addGestureRecognizer(tap)
         
-        TranslationService.shared.getTranslation(baseText: "Hello", targetLanguage: Language.french.code) { (success, _translatedText) in
+        TranslationService.shared.getTranslation(baseText: "Hello World again", targetLanguage: Language.french.code) { (success, _translatedText) in
             guard success,
                   let translatedText = _translatedText else { return }
             print(translatedText)
         }
-    }
-    
-    @objc func closeKeyboard() {
-        self.view.endEditing(true)
     }
     
     // MARK: - Private methods

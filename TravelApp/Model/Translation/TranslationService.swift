@@ -5,7 +5,6 @@
 //  Created by Raphaël Payet on 30/04/2021.
 //
 
-import Foundation
 import UIKit
 
 enum Language {
@@ -17,6 +16,33 @@ enum Language {
             return "en"
         case .french:
             return "fr"
+        }
+    }
+    
+    var flag: UIImage {
+        switch self {
+        case .english:
+            return UIImage(named: "usa_flag")!
+        case .french:
+            return UIImage(named: "fr_flag")!
+        }
+    }
+    
+    var displayText: String {
+        switch self {
+        case .english:
+            return "English"
+        case .french:
+            return "Français"
+        }
+    }
+    
+    var textViewPlaceholder: String {
+        switch self {
+        case .english:
+            return "Hello ! Enter the text to translate here!"
+        case .french:
+            return "Bonjour ! Entrez le texte à traduire ici !"
         }
     }
 }
@@ -39,7 +65,8 @@ class TranslationService {
     func getTranslation(baseText: String, targetLanguage: String, completion: @escaping ((_ success: Bool, _ translatedText: String?) -> Void)) {
 //        let completeStringURL = baseStringURL + "key=" + API_KEY + "&q=\(baseText)" + "&source=\(Language.english.code)" + "&target=\(targetLanguage)"
         let completeStringURL = "https://translation.googleapis.com/language/translate/v2?key=\(API_KEY)&q=\(baseText)&target=\(targetLanguage)"
-        guard let url = URL(string: completeStringURL) else {
+        var urlString = completeStringURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        guard let url = URL(string: urlString!) else {
             completion(false, nil)
             return
         }
