@@ -83,7 +83,6 @@ class WeatherService {
     private var latitude: Double = 0
     private var longitude: Double = 0
     private var excludeOptions: String = ""
-    private var array = [WeatherCardObject]()
     
     private var task: URLSessionDataTask?
     private var session = URLSession(configuration: .default)
@@ -96,6 +95,7 @@ class WeatherService {
     func getWeather(in city: City, for period: TimePeriod, completion: @escaping ((_ success: Bool, _ weatherObject: [WeatherCardObject]?) -> Void)) {
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(city.latitude)" + "&lon=\(city.longitude)" + "&exclude=\(period.excludeOptions)"
         let url = URL(string: completeStringURL)!
+        print(completeStringURL)
         let request = URLRequest(url: url)
         task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
@@ -143,7 +143,7 @@ class WeatherService {
             completion(false, nil)
             return
         }
-        array = []
+        var array : [WeatherCardObject] = []
         for day in responseJSON.daily {
             let displayableDate = format(date: NSDate(timeIntervalSince1970: day.dt), to: "E")
             let kelvinTemperature = day.temp.day
@@ -166,7 +166,7 @@ class WeatherService {
             return
         }
         
-        array = []
+        var array : [WeatherCardObject] = []
         for item in 0..<7 {
             let hour = responseJSON.hourly[item]
             let displayableDate = format(date: NSDate(timeIntervalSince1970: hour.dt), to: "HH")
@@ -181,12 +181,19 @@ class WeatherService {
     }
     
     private func decodeCurrentWeather(data: Data?, completion: @escaping((_ success: Bool, _ weatherObjects: [WeatherCardObject]?) -> Void)) {
-        guard let data = data,
-              let responseJSON = try? JSONDecoder().decode(CurrentWeather.self, from: data) else {
+        print("current")
+        guard let data = data else {
+            print("no data")
             completion(false, nil)
             return
         }
-        array = []
+        guard let responseJSON = try? JSONDecoder().decode(CurrentWeather.self, from: data) else {
+            print("no responseJSON")
+            completion(false, nil)
+            return
+        }
+        print("current ok")
+        var array : [WeatherCardObject] = []
         let weatherID = responseJSON.current.weather[0].id
         let temperatureInKelvin = responseJSON.current.temp
         // TODO : Get a rounded Int
