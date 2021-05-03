@@ -63,14 +63,12 @@ class TranslationService {
     
     // MARK: - Public functions
     func getTranslation(baseText: String, targetLanguage: Language, completion: @escaping ((_ success: Bool, _ translatedText: String?) -> Void)) {
-//        let completeStringURL = baseStringURL + "key=" + API_KEY + "&q=\(baseText)" + "&source=\(Language.english.code)" + "&target=\(targetLanguage)"
-        let completeStringURL = "https://translation.googleapis.com/language/translate/v2?key=\(API_KEY)&q=\(baseText)&target=\(targetLanguage.code)"
-        var urlString = completeStringURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let completeStringURL = "https://translation.googleapis.com/language/translate/v2?key=\(API_KEY)&q=\(baseText)&target=\(targetLanguage.code)&format=text"
+        let urlString = completeStringURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         guard let url = URL(string: urlString!) else {
             completion(false, nil)
             return
         }
-        print(baseText)
         let request = URLRequest(url: url)
         task = session.dataTask(with: request, completionHandler: { (_data, _response, _error) in
             DispatchQueue.main.async {
@@ -93,11 +91,6 @@ class TranslationService {
                     return
                 }
                 let translatedText = responseJSON.data.translations[0].translatedText
-                print(translatedText)
-                let utf8Data = Data(translatedText.utf8)
-                print(utf8Data)
-                let string = String(describing: translatedText.cString(using: String.Encoding.utf8))
-                print(string)
                 completion(true, translatedText)
             }
         })
