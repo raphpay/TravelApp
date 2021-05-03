@@ -186,12 +186,14 @@ extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == destinationCollectionView {
             let destinationCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
             let object = destinationWeatherObjects[indexPath.item]
-            destinationCell.configure(icon: WeatherService.shared.convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
+            guard let image = WeatherService.shared.convertIcon(id: object.iconId) else { return UICollectionViewCell() }
+            destinationCell.configure(icon: image, degrees: object.temperature, time: object.date)
             return destinationCell
         } else {
             let localCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
             let object = localWeatherObjects[indexPath.item]
-            localCell.configure(icon: WeatherService.shared.convertIcon(id: object.iconId), degrees: object.temperature, time: object.date)
+            guard let image = WeatherService.shared.convertIcon(id: object.iconId) else { return UICollectionViewCell() }
+            localCell.configure(icon: image, degrees: object.temperature, time: object.date)
             return localCell
         }
     }

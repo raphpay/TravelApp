@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import UIKit
 @testable import TravelApp
 
 class WeatherServiceTest: XCTestCase {
@@ -318,5 +319,47 @@ class WeatherServiceTest: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 0.01)
+    }
+    
+    
+    // MARK: - Icon conversion
+    func testGivenIDIs200WhenGettingWeatherIconThenWeatherIsThunderstorm() {
+        let icon = WeatherService.shared.convertIcon(id: 200)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.thunderstorm.rawValue)!)
+    }
+    
+    func testGivenIDIs300WhenGettingWeatherIconThenWeatherIsDrizzle() {
+        let icon = WeatherService.shared.convertIcon(id: 300)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.drizzle.rawValue)!)
+    }
+    
+    func testGivenIDIs500WhenGettingWeatherIconThenWeatherIsRain() {
+        let icon = WeatherService.shared.convertIcon(id: 500)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.rain.rawValue)!)
+    }
+    
+    func testGivenIDIs600WhenGettingWeatherIconThenWeatherIsSnow() {
+        let icon = WeatherService.shared.convertIcon(id: 600)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.snow.rawValue)!)
+    }
+    
+    func testGivenIDIs711WhenGettingWeatherIconThenWeatherIsSmoke() {
+        let icon = WeatherService.shared.convertIcon(id: 711)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.smoke.rawValue)!)
+    }
+    
+    func testGivenIDIs741WhenGettingWeatherIconThenWeatherIsFog() {
+        let icon = WeatherService.shared.convertIcon(id: 741)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.fog.rawValue)!)
+    }
+    
+    func testGivenIDIs800WhenGettingWeatherIconThenWeatherIsClear() {
+        let icon = WeatherService.shared.convertIcon(id: 800)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.clear.rawValue)!)
+    }
+    
+    func testGivenIDIs801WhenGettingWeatherIconThenWeatherIsCloud() {
+        let icon = WeatherService.shared.convertIcon(id: 801)
+        XCTAssertEqual(icon, UIImage(named: WeatherIcons.cloud.rawValue)!)
     }
 }

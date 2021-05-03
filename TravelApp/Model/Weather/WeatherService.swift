@@ -101,7 +101,6 @@ class WeatherService {
             DispatchQueue.main.async {
                 guard _error == nil else {
                     completion(false, nil)
-                    print("Error : \(_error!.localizedDescription)")
                     return
                 }
                 guard let data = _data else {
@@ -181,19 +180,11 @@ class WeatherService {
     }
     
     private func decodeCurrentWeather(data: Data?, completion: @escaping((_ success: Bool, _ weatherObjects: [WeatherCardObject]?) -> Void)) {
-        print("current")
-        guard let data = data else {
-            print("no data")
+        guard let data = data,
+            let responseJSON = try? JSONDecoder().decode(CurrentWeather.self, from: data) else {
             completion(false, nil)
             return
         }
-        guard let responseJSON = try? JSONDecoder().decode(CurrentWeather.self, from: data) else {
-            print("no responseJSON")
-            completion(false, nil)
-            return
-        }
-        print("current ok")
-        var array : [WeatherCardObject] = []
         let weatherID = responseJSON.current.weather[0].id
         let temperatureInKelvin = responseJSON.current.temp
         // TODO : Get a rounded Int
@@ -210,8 +201,8 @@ class WeatherService {
         return formatter.string(from: date as Date)
     }
     
-    func convertIcon(id: Int) -> UIImage {
-        var icon = UIImage()
+    func convertIcon(id: Int) -> UIImage? {
+        var icon : UIImage?
         
         if WeatherRange.thunderstorm.range.contains(id) {
             icon = UIImage(named: WeatherIcons.thunderstorm.rawValue)!
