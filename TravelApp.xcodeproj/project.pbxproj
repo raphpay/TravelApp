@@ -24,7 +24,6 @@
 		866063AF261B44F300539AEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 866063AE261B44F300539AEE /* Assets.xcassets */; };
 		866063B2261B44F300539AEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 866063B0261B44F300539AEE /* LaunchScreen.storyboard */; };
 		866063BD261B44F400539AEE /* TravelAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063BC261B44F400539AEE /* TravelAppTests.swift */; };
-		866063C8261B44F400539AEE /* TravelAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063C7261B44F400539AEE /* TravelAppUITests.swift */; };
 		866063D9261B458900539AEE /* CurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063D8261B458900539AEE /* CurrencyVC.swift */; };
 		866063E4261B473E00539AEE /* WeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063E3261B473E00539AEE /* WeatherVC.swift */; };
 		866063E9261B474800539AEE /* TranslationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063E8261B474800539AEE /* TranslationVC.swift */; };
@@ -41,13 +40,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		866063B9261B44F400539AEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8660639A261B44F100539AEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 866063A1261B44F100539AEE;
-			remoteInfo = TravelApp;
-		};
-		866063C4261B44F400539AEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8660639A261B44F100539AEE /* Project object */;
 			proxyType = 1;
@@ -78,9 +70,6 @@
 		866063B8261B44F400539AEE /* TravelAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		866063BC261B44F400539AEE /* TravelAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelAppTests.swift; sourceTree = "<group>"; };
 		866063BE261B44F400539AEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		866063C3261B44F400539AEE /* TravelAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		866063C7261B44F400539AEE /* TravelAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelAppUITests.swift; sourceTree = "<group>"; };
-		866063C9261B44F400539AEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		866063D8261B458900539AEE /* CurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyVC.swift; sourceTree = "<group>"; };
 		866063E3261B473E00539AEE /* WeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVC.swift; sourceTree = "<group>"; };
 		866063E8261B474800539AEE /* TranslationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationVC.swift; sourceTree = "<group>"; };
@@ -104,13 +93,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		866063B5261B44F400539AEE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		866063C0261B44F400539AEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -146,7 +128,6 @@
 			children = (
 				866063A4261B44F100539AEE /* TravelApp */,
 				866063BB261B44F400539AEE /* TravelAppTests */,
-				866063C6261B44F400539AEE /* TravelAppUITests */,
 				866063A3261B44F100539AEE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -156,7 +137,6 @@
 			children = (
 				866063A2261B44F100539AEE /* TravelApp.app */,
 				866063B8261B44F400539AEE /* TravelAppTests.xctest */,
-				866063C3261B44F400539AEE /* TravelAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,15 +162,6 @@
 				866063BE261B44F400539AEE /* Info.plist */,
 			);
 			path = TravelAppTests;
-			sourceTree = "<group>";
-		};
-		866063C6261B44F400539AEE /* TravelAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				866063C7261B44F400539AEE /* TravelAppUITests.swift */,
-				866063C9261B44F400539AEE /* Info.plist */,
-			);
-			path = TravelAppUITests;
 			sourceTree = "<group>";
 		};
 		86D6503D263332A600AA2410 /* Weather */ = {
@@ -320,24 +291,6 @@
 			productReference = 866063B8261B44F400539AEE /* TravelAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		866063C2261B44F400539AEE /* TravelAppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 866063D2261B44F400539AEE /* Build configuration list for PBXNativeTarget "TravelAppUITests" */;
-			buildPhases = (
-				866063BF261B44F400539AEE /* Sources */,
-				866063C0261B44F400539AEE /* Frameworks */,
-				866063C1261B44F400539AEE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				866063C5261B44F400539AEE /* PBXTargetDependency */,
-			);
-			name = TravelAppUITests;
-			productName = TravelAppUITests;
-			productReference = 866063C3261B44F400539AEE /* TravelAppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -351,10 +304,6 @@
 						CreatedOnToolsVersion = 12.2;
 					};
 					866063B7261B44F400539AEE = {
-						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 866063A1261B44F100539AEE;
-					};
-					866063C2261B44F400539AEE = {
 						CreatedOnToolsVersion = 12.2;
 						TestTargetID = 866063A1261B44F100539AEE;
 					};
@@ -375,7 +324,6 @@
 			targets = (
 				866063A1261B44F100539AEE /* TravelApp */,
 				866063B7261B44F400539AEE /* TravelAppTests */,
-				866063C2261B44F400539AEE /* TravelAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -400,13 +348,6 @@
 				863CAFB826333B22005ECAAD /* CurrentWeather.json in Resources */,
 				863CAFAA26333AFF005ECAAD /* HourlyWeather.json in Resources */,
 				865CC90C262BD6F700B30EB2 /* Currency.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		866063C1261B44F400539AEE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,14 +389,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		866063BF261B44F400539AEE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				866063C8261B44F400539AEE /* TravelAppUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -463,11 +396,6 @@
 			isa = PBXTargetDependency;
 			target = 866063A1261B44F100539AEE /* TravelApp */;
 			targetProxy = 866063B9261B44F400539AEE /* PBXContainerItemProxy */;
-		};
-		866063C5261B44F400539AEE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 866063A1261B44F100539AEE /* TravelApp */;
-			targetProxy = 866063C4261B44F400539AEE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -689,46 +617,6 @@
 			};
 			name = Release;
 		};
-		866063D3261B44F400539AEE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N96T5K2D2H;
-				INFOPLIST_FILE = TravelAppUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = oriapy.TravelAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TravelApp;
-			};
-			name = Debug;
-		};
-		866063D4261B44F400539AEE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N96T5K2D2H;
-				INFOPLIST_FILE = TravelAppUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = oriapy.TravelAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TravelApp;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -755,15 +643,6 @@
 			buildConfigurations = (
 				866063D0261B44F400539AEE /* Debug */,
 				866063D1261B44F400539AEE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		866063D2261B44F400539AEE /* Build configuration list for PBXNativeTarget "TravelAppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				866063D3261B44F400539AEE /* Debug */,
-				866063D4261B44F400539AEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -22,12 +22,10 @@ struct CurrentWeather: Decodable {
 }
 
 struct DailyWeather: Decodable {
-    let timezone: String
     let daily: [DailyInfo]
 }
 
 struct HourlyWeather: Decodable {
-    let timezone: String
     let hourly: [HourlyInfo]
 }
 
