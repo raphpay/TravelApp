@@ -219,10 +219,10 @@
 		86FECA50262086370016AEDE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				864F3137262038F9009DFDE3 /* WeatherCollectionViewCell.swift */,
 				866063AB261B44F100539AEE /* Main.storyboard */,
-				866063AE261B44F300539AEE /* Assets.xcassets */,
 				866063B0261B44F300539AEE /* LaunchScreen.storyboard */,
+				864F3137262038F9009DFDE3 /* WeatherCollectionViewCell.swift */,
+				866063AE261B44F300539AEE /* Assets.xcassets */,
 			);
 			path = View;
 			sourceTree = "<group>";
