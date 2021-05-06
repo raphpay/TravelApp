@@ -31,6 +31,7 @@
 		866063D9261B458900539AEE /* CurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063D8261B458900539AEE /* CurrencyVC.swift */; };
 		866063E4261B473E00539AEE /* WeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063E3261B473E00539AEE /* WeatherVC.swift */; };
 		866063E9261B474800539AEE /* TranslationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866063E8261B474800539AEE /* TranslationVC.swift */; };
+		869421EC2643B89C00BC7791 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869421EB2643B89C00BC7791 /* UIViewController+Ext.swift */; };
 		86D0EB72262963DC00EDD7E4 /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D0EB71262963DC00EDD7E4 /* Double+Ext.swift */; };
 		86D65042263332DB00AA2410 /* WeatherServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D65041263332DB00AA2410 /* WeatherServiceTest.swift */; };
 		86D6504D2633332B00AA2410 /* FakeWeatherReponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D6504C2633332B00AA2410 /* FakeWeatherReponseData.swift */; };
@@ -81,6 +82,7 @@
 		866063D8261B458900539AEE /* CurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyVC.swift; sourceTree = "<group>"; };
 		866063E3261B473E00539AEE /* WeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVC.swift; sourceTree = "<group>"; };
 		866063E8261B474800539AEE /* TranslationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationVC.swift; sourceTree = "<group>"; };
+		869421EB2643B89C00BC7791 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		86D0EB71262963DC00EDD7E4 /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
 		86D65041263332DB00AA2410 /* WeatherServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceTest.swift; sourceTree = "<group>"; };
 		86D6504C2633332B00AA2410 /* FakeWeatherReponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeWeatherReponseData.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			children = (
 				86FECA4726207DCE0016AEDE /* UITextField+Ext.swift */,
 				86D0EB71262963DC00EDD7E4 /* Double+Ext.swift */,
+				869421EB2643B89C00BC7791 /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			files = (
 				861485512624045C00546202 /* WeatherService.swift in Sources */,
 				864F3138262038FA009DFDE3 /* WeatherCollectionViewCell.swift in Sources */,
+				869421EC2643B89C00BC7791 /* UIViewController+Ext.swift in Sources */,
 				86245209262B11F2005E7D9F /* Icons.swift in Sources */,
 				86FECA562620868B0016AEDE /* CurrencyConverterService.swift in Sources */,
 				86FECA4826207DCE0016AEDE /* UITextField+Ext.swift in Sources */,
