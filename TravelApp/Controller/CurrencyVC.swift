@@ -35,6 +35,7 @@ class CurrencyVC : UIViewController {
     @IBAction func invertButtonTapped(_ sender: UIButton) {
         if baseCurrency == .euro {
             convertUITo(.usDollar, from: .euro)
+            
             CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value else { return }
                 let roundedValue = value.round(to: 3)
@@ -47,10 +48,9 @@ class CurrencyVC : UIViewController {
                     self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
                 }
             }
+            
             baseCurrency = .usDollar
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
-                self.invertButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            }
+            animateViews(rotationAngle: .pi)
         } else {
             convertUITo(.euro, from: .usDollar)
             baseCurrency = .euro
@@ -66,10 +66,7 @@ class CurrencyVC : UIViewController {
                     self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.euro.info.symbol)"
                 }
             }
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
-                print("invertButtonTapped 2")
-                self.invertButton.transform = .identity
-            }
+            animateViews(rotationAngle: 0)
         }
     }
 
@@ -165,6 +162,20 @@ class CurrencyVC : UIViewController {
         secondTextField.placeholder = "1\(currency.info.symbol)"
         // Button
         convertButton.setTitle("Convert \(baseCurrency.info.code) to \(currency.info.code)", for: .normal)
+    }
+    
+    private func animateViews(rotationAngle: CGFloat) {
+        marketOrderLabel.alpha = 0
+        firstCurrencyLabel.alpha = 0
+        secondCurrencyLabel.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            self.marketOrderLabel.alpha = 1
+            self.firstCurrencyLabel.alpha = 1
+            self.secondCurrencyLabel.alpha = 1
+        }
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+            self.invertButton.transform = CGAffineTransform(rotationAngle: rotationAngle)
+        }
     }
 }
 

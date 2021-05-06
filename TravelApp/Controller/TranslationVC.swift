@@ -37,10 +37,7 @@ class TranslationVC : UIViewController {
             
             entryTextView.text = Language.english.textViewPlaceholder
             translatedTextView.text = Language.french.textViewPlaceholder
-            
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
-                self.translateButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            }
+            animateViews(rotationAngle: .pi)
         } else {
             leftFlag.image = Language.french.flag
             leftLanguageLabel.text = Language.french.displayText
@@ -53,9 +50,7 @@ class TranslationVC : UIViewController {
             entryTextView.text = Language.french.textViewPlaceholder
             translatedTextView.text = Language.english.textViewPlaceholder
             
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
-                self.translateButton.transform = .identity
-            }
+            animateViews(rotationAngle: 0)
         }
     }
     
@@ -125,8 +120,30 @@ class TranslationVC : UIViewController {
         guard let textToCopy = textView.text else { return }
         pasteboard.string = textToCopy
     }
+    
+    private func animateViews(rotationAngle: CGFloat) {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+            self.translateButton.transform = CGAffineTransform(rotationAngle: rotationAngle)
+        }
+        
+        leftFlag.alpha = 0
+        leftLanguageLabel.alpha = 0
+        rightFlag.alpha = 0
+        rightLanguageLabel.alpha = 0
+        entryTextView.alpha = 0
+        translatedTextView.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            self.leftFlag.alpha = 1
+            self.leftLanguageLabel.alpha = 1
+            self.rightFlag.alpha = 1
+            self.rightLanguageLabel.alpha = 1
+            self.entryTextView.alpha = 1
+            self.translatedTextView.alpha = 1
+        }
+    }
 }
 
+// MARK: Extensions
 extension TranslationVC : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = ""
