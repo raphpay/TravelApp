@@ -71,6 +71,7 @@ class WeatherVC : UIViewController {
             }
         }
     }
+    
     @IBAction func localButtonTapped(_ sender: UIButton) {
         if localDisplay == .week {
             localDisplay = .today
@@ -173,25 +174,21 @@ class WeatherVC : UIViewController {
     
     // MARK: - Private methods
     private func configureCollectionViews() {
-        let destinationLayout = UICollectionViewFlowLayout()
-        destinationLayout.scrollDirection = .horizontal
-        destinationLayout.itemSize = CGSize(width: 80, height: 138)
-        destinationLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        // Create layout
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 80, height: 138)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         
-        let localLayout = UICollectionViewFlowLayout()
-        localLayout.scrollDirection = .horizontal
-        localLayout.itemSize = CGSize(width: 80, height: 138)
-        localLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        // Create Collection views
+        destinationCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        destinationCollectionView = UICollectionView(frame: .zero, collectionViewLayout: destinationLayout)
-        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: localLayout)
-        
+        // Add collection Views
         self.view.addSubview(localCollectionView)
         self.view.addSubview(destinationCollectionView)
         
-        destinationCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+        // Place constraints on collection views
         NSLayoutConstraint.activate([
             destinationCollectionView.topAnchor.constraint(equalTo: destinationToggleButton.bottomAnchor, constant: 5),
             destinationCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -204,18 +201,22 @@ class WeatherVC : UIViewController {
             localCollectionView.heightAnchor.constraint(equalToConstant: 138)
         ])
         
+        // Configure collection views
+        destinationCollectionView.translatesAutoresizingMaskIntoConstraints = false
         destinationCollectionView.showsHorizontalScrollIndicator = false
         destinationCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.localCellID)
         destinationCollectionView.backgroundColor = .clear
         destinationCollectionView.delegate = self
         destinationCollectionView.dataSource = self
         
+        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
         localCollectionView.showsHorizontalScrollIndicator = false
         localCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.localCellID)
         localCollectionView.backgroundColor = .clear
         localCollectionView.delegate = self
         localCollectionView.dataSource = self
     }
+    
     private func toggleActivityIndicator(show : Bool, for city: City, in view: ViewType) {
         if city == .newYork {
             if view == .bigView {
@@ -246,6 +247,7 @@ class WeatherVC : UIViewController {
 
 // MARK: - Collection View
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == destinationCollectionView {
             return destinationWeatherObjects.count
