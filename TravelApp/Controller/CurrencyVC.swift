@@ -18,6 +18,7 @@ class CurrencyVC : UIViewController {
     @IBOutlet weak var secondTextField: UITextField!
     @IBOutlet weak var convertButton: UIButton!
     @IBOutlet weak var convertButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var invertButton: UIButton!
     
     // MARK: - Properties
     lazy private var textFields : [UITextField] = [firstTextField, secondTextField]
@@ -47,6 +48,9 @@ class CurrencyVC : UIViewController {
                 }
             }
             baseCurrency = .usDollar
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+                self.invertButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            }
         } else {
             convertUITo(.euro, from: .usDollar)
             baseCurrency = .euro
@@ -61,6 +65,10 @@ class CurrencyVC : UIViewController {
                     let calculatedRoundValue = calculatedValue.round(to: 3)
                     self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.euro.info.symbol)"
                 }
+            }
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+                print("invertButtonTapped 2")
+                self.invertButton.transform = .identity
             }
         }
     }
@@ -187,16 +195,4 @@ extension CurrencyVC : UITextFieldDelegate {
         tapDone()
         return true
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-    }
-
-    // TODO : Use this code with translate part
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//            if noteText.text == "" {
-//                noteText.textColor = greyColorPlaceholder
-//                noteText.text = placeholder
-//            }
-//        }
 }

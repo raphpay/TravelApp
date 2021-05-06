@@ -164,7 +164,6 @@ class WeatherVC : UIViewController {
                 self.presentAlert(message: TimePeriod.day.errorMessage)
                 return
             }
-            self.presentAlert(message: TimePeriod.hour.errorMessage)
             self.toggleActivityIndicator(show: false, for: .local, in: .collectionView)
             self.localWeatherObjects = objects
             self.localCollectionView.reloadData()

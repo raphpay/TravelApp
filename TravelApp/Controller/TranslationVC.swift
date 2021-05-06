@@ -21,9 +21,11 @@ class TranslationVC : UIViewController {
     @IBOutlet weak var translatedTextView: UITextView!
     @IBOutlet weak var translateLabel: UILabel!
     @IBOutlet var containerView: UIView!
+    @IBOutlet weak var translateButton: UIButton!
     
     // MARK: - Actions
     @IBAction func translateButtonTapped(_ sender: UIButton) {
+        
         if baseLanguage == .french {
             leftFlag.image = Language.english.flag
             leftLanguageLabel.text = Language.english.displayText
@@ -35,6 +37,10 @@ class TranslationVC : UIViewController {
             
             entryTextView.text = Language.english.textViewPlaceholder
             translatedTextView.text = Language.french.textViewPlaceholder
+            
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+                self.translateButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            }
         } else {
             leftFlag.image = Language.french.flag
             leftLanguageLabel.text = Language.french.displayText
@@ -46,8 +52,13 @@ class TranslationVC : UIViewController {
             
             entryTextView.text = Language.french.textViewPlaceholder
             translatedTextView.text = Language.english.textViewPlaceholder
+            
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+                self.translateButton.transform = .identity
+            }
         }
     }
+    
     @IBAction func entryCopyButtonTapped(_ sender: UIButton) {
         copyToClipboard(from: entryTextView)
     }
@@ -65,7 +76,6 @@ class TranslationVC : UIViewController {
     
     // MARK: - Override methods
     override func viewDidLoad() {
-        // Ajouter un bouton pour cacher le clavier
         styleView()
         title = "Translate"
         entryTextView.delegate = self
@@ -83,7 +93,6 @@ class TranslationVC : UIViewController {
     
     private func resetPlaceHolders(in textView : UITextView) {
         if textView.text == "" {
-//            noteText.textColor = greyColorPlaceholder
             textView.textColor = UIColor(named: "placeholder")
             if baseLanguage == .french {
                 textView.text = Language.french.textViewPlaceholder

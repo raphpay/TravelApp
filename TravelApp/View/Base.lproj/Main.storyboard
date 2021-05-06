@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mwr-iA-Prm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mwr-iA-Prm">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbJ-Pm-kta">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-cR-3Ia">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="810"/>
@@ -170,7 +170,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="xqT-2u-VFI">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" ambiguous="YES" id="x4G-eU-E9l">
+                        <view key="titleView" contentMode="scaleToFill" id="x4G-eU-E9l">
                             <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="separatorColor"/>
@@ -320,6 +320,7 @@
                         <outlet property="firstContainerView" destination="iiM-iT-IbW" id="pMp-v2-DVK"/>
                         <outlet property="firstCurrencyLabel" destination="dDg-de-3Z7" id="3Of-J5-goX"/>
                         <outlet property="firstTextField" destination="zp4-3X-rCY" id="Jkv-bB-4Xk"/>
+                        <outlet property="invertButton" destination="KgO-E9-B8m" id="jat-dk-xgY"/>
                         <outlet property="marketOrderLabel" destination="ix4-bs-57j" id="p67-aQ-thz"/>
                         <outlet property="secondContainerView" destination="JEZ-gn-wYm" id="vzg-2R-yzE"/>
                         <outlet property="secondCurrencyLabel" destination="3gQ-2d-d7q" id="mMg-6e-PXL"/>
@@ -601,6 +602,7 @@
                         <outlet property="rightFlag" destination="4W2-dL-IQg" id="f42-M2-C0w"/>
                         <outlet property="rightLanguageLabel" destination="4MD-Lv-JDO" id="C8T-OG-Z9A"/>
                         <outlet property="secondBackgroundView" destination="ILY-IA-4Sb" id="Xki-Sa-cAA"/>
+                        <outlet property="translateButton" destination="ziZ-eZ-GNz" id="azW-kC-glO"/>
                         <outlet property="translateLabel" destination="gXo-dG-yKy" id="T1a-Z1-xso"/>
                         <outlet property="translatedTextView" destination="Vqo-X0-j0e" id="MWJ-XY-bUD"/>
                     </connections>
