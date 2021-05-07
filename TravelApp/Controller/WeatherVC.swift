@@ -14,6 +14,11 @@ enum ButtonTitle: String {
     case today = "Today"
 }
 
+enum ViewType {
+    case bigView, collectionView
+}
+
+
 class WeatherVC : UIViewController {
     
     // MARK: - Outlets
@@ -21,12 +26,15 @@ class WeatherVC : UIViewController {
     @IBOutlet weak var destinationTemperatureLabel: UILabel!
     @IBOutlet weak var destinationCityLabel: UILabel!
     @IBOutlet weak var destinationToggleButton: UIButton!
-    
+    @IBOutlet weak var destinationActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var destinationCollectionActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var localImageView: UIImageView!
     @IBOutlet weak var localTemperatureLabel: UILabel!
     @IBOutlet weak var localCityLabel: UILabel!
     @IBOutlet weak var localToggleButton: UIButton!
+    @IBOutlet weak var localActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var localCollectionActivityIndicator: UIActivityIndicatorView!
     
     
     // MARK: - Actions
@@ -35,8 +43,13 @@ class WeatherVC : UIViewController {
             destinationDisplay = .today
             destinationToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .newYork, for: .hour) { (success, _objects) in
+                self.toggleActivityIndicator(show: true, for: .newYork, in: .bigView)
                 guard success,
-                      let objects = _objects else { return }
+                      let objects = _objects else {
+                    self.presentAlert(message: TimePeriod.hour.errorMessage)
+                    return
+                }
+                self.toggleActivityIndicator(show: false, for: .newYork, in: .bigView)
                 self.destinationWeatherObjects = []
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
@@ -45,21 +58,32 @@ class WeatherVC : UIViewController {
             destinationDisplay = .week
             destinationToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
+                self.toggleActivityIndicator(show: true, for: .newYork, in: .bigView)
                 guard success,
-                      let objects = _objects else { return }
+                      let objects = _objects else {
+                    self.presentAlert(message: TimePeriod.day.errorMessage)
+                    return
+                }
+                self.toggleActivityIndicator(show: false, for: .newYork, in: .bigView)
                 self.destinationWeatherObjects = []
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
             }
         }
     }
+    
     @IBAction func localButtonTapped(_ sender: UIButton) {
         if localDisplay == .week {
             localDisplay = .today
             localToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
+                self.toggleActivityIndicator(show: true, for: .local, in: .collectionView)
                 guard success,
-                      let objects = _objects else { return }
+                      let objects = _objects else {
+                    self.presentAlert(message: TimePeriod.hour.errorMessage)
+                    return
+                }
+                self.toggleActivityIndicator(show: false, for: .local, in: .collectionView)
                 self.localWeatherObjects = []
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
@@ -69,7 +93,10 @@ class WeatherVC : UIViewController {
             localToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
                 guard success,
-                      let objects = _objects else { return }
+                      let objects = _objects else {
+                    self.presentAlert(message: TimePeriod.day.errorMessage)
+                    return
+                }
                 self.localWeatherObjects = []
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
@@ -83,6 +110,7 @@ class WeatherVC : UIViewController {
     private var localCollectionView: UICollectionView! = nil
     private var destinationDisplay : ButtonTitle = .week
     private var localDisplay : ButtonTitle = .week
+    private let weatherService = WeatherService.shared
     
     var destinationWeatherObjects: [WeatherCardObject] = []
     var localWeatherObjects: [WeatherCardObject] = []
@@ -93,31 +121,51 @@ class WeatherVC : UIViewController {
         title = "Weather"
         configureCollectionViews()
         // Big weather
-        WeatherService.shared.getWeather(in: .newYork, for: .current) { (success, _objects) in
+        weatherService.getWeather(in: .newYork, for: .current) { (success, _objects) in
+            self.toggleActivityIndicator(show: true, for: .newYork, in: .bigView)
             guard success,
-                  let objects = _objects else { return }
+                  let objects = _objects else {
+                self.presentAlert(message: TimePeriod.current.errorMessage)
+                return
+            }
+            self.toggleActivityIndicator(show: false, for: .newYork, in: .bigView)
             self.destinationImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.destinationTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
         
-        WeatherService.shared.getWeather(in: .local, for: .current) { (success, _objects) in
+        weatherService.getWeather(in: .local, for: .current) { (success, _objects) in
+            self.toggleActivityIndicator(show: true, for: .local, in: .bigView)
             guard success,
-                  let objects = _objects else { return }
+                  let objects = _objects else {
+                self.presentAlert(message: TimePeriod.current.errorMessage)
+                return
+            }
+            self.toggleActivityIndicator(show: false, for: .local, in: .bigView)
             self.localImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.localTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
         // Collection views
-        WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
+        weatherService.getWeather(in: .newYork, for: .day) { (success, _objects) in
+            self.toggleActivityIndicator(show: true, for: .newYork, in: .collectionView)
             guard success,
-                let objects = _objects else { return }
+                let objects = _objects else {
+                self.presentAlert(message: TimePeriod.day.errorMessage)
+                return
+            }
+            self.toggleActivityIndicator(show: false, for: .newYork, in: .collectionView)
             self.destinationWeatherObjects = objects
             self.destinationCollectionView.reloadData()
         }
-        WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
+        weatherService.getWeather(in: .local, for: .day) { (success, _objects) in
+            self.toggleActivityIndicator(show: true, for: .local, in: .collectionView)
             guard success,
-                let objects = _objects else { return }
+                let objects = _objects else {
+                self.presentAlert(message: TimePeriod.day.errorMessage)
+                return
+            }
+            self.toggleActivityIndicator(show: false, for: .local, in: .collectionView)
             self.localWeatherObjects = objects
             self.localCollectionView.reloadData()
         }
@@ -126,25 +174,21 @@ class WeatherVC : UIViewController {
     
     // MARK: - Private methods
     private func configureCollectionViews() {
-        let destinationLayout = UICollectionViewFlowLayout()
-        destinationLayout.scrollDirection = .horizontal
-        destinationLayout.itemSize = CGSize(width: 80, height: 138)
-        destinationLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        // Create layout
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 80, height: 138)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         
-        let localLayout = UICollectionViewFlowLayout()
-        localLayout.scrollDirection = .horizontal
-        localLayout.itemSize = CGSize(width: 80, height: 138)
-        localLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        // Create Collection views
+        destinationCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        destinationCollectionView = UICollectionView(frame: .zero, collectionViewLayout: destinationLayout)
-        localCollectionView = UICollectionView(frame: .zero, collectionViewLayout: localLayout)
-        
+        // Add collection Views
         self.view.addSubview(localCollectionView)
         self.view.addSubview(destinationCollectionView)
         
-        destinationCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+        // Place constraints on collection views
         NSLayoutConstraint.activate([
             destinationCollectionView.topAnchor.constraint(equalTo: destinationToggleButton.bottomAnchor, constant: 5),
             destinationCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -157,23 +201,53 @@ class WeatherVC : UIViewController {
             localCollectionView.heightAnchor.constraint(equalToConstant: 138)
         ])
         
+        // Configure collection views
+        destinationCollectionView.translatesAutoresizingMaskIntoConstraints = false
         destinationCollectionView.showsHorizontalScrollIndicator = false
         destinationCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.localCellID)
         destinationCollectionView.backgroundColor = .clear
         destinationCollectionView.delegate = self
         destinationCollectionView.dataSource = self
         
+        localCollectionView.translatesAutoresizingMaskIntoConstraints = false
         localCollectionView.showsHorizontalScrollIndicator = false
         localCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.localCellID)
         localCollectionView.backgroundColor = .clear
         localCollectionView.delegate = self
         localCollectionView.dataSource = self
     }
+    
+    private func toggleActivityIndicator(show : Bool, for city: City, in view: ViewType) {
+        if city == .newYork {
+            if view == .bigView {
+                destinationActivityIndicator.isHidden = !show
+                destinationImageView.isHidden = show
+                destinationTemperatureLabel.isHidden = show
+                show ? destinationActivityIndicator.startAnimating() : destinationActivityIndicator.stopAnimating()
+            } else {
+                destinationCollectionActivityIndicator.isHidden = !show
+                destinationCollectionView.alpha = show ? 0 : 1 // There was a bug with isHidden property
+                show ? destinationCollectionActivityIndicator.startAnimating() : destinationCollectionActivityIndicator.stopAnimating()
+            }
+        } else {
+            if view == .bigView {
+                localActivityIndicator.isHidden = !show
+                localImageView.isHidden = show
+                localTemperatureLabel.isHidden = show
+                show ? localActivityIndicator.startAnimating() : localActivityIndicator.stopAnimating()
+            } else {
+                localCollectionActivityIndicator.isHidden = !show
+                localCollectionView.isHidden = show
+                show ? localCollectionActivityIndicator.startAnimating() : localCollectionActivityIndicator.stopAnimating()
+            }
+        }
+    }
 }
 
 
 // MARK: - Collection View
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == destinationCollectionView {
             return destinationWeatherObjects.count

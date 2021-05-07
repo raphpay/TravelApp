@@ -22,6 +22,17 @@ enum TimePeriod {
             return "hourly,minutely,alerts,current"
         }
     }
+    
+    var errorMessage: String {
+        switch self {
+        case .current:
+            return "Unable to load current weather. \nPlease try again later"
+        case .hour:
+            return "Unable to load hourly weather. \nPlease try again later"
+        case .day:
+            return "Unable to load current weather. \nPlease try again later"
+        }
+    }
 }
 
 enum City {
@@ -95,7 +106,6 @@ class WeatherService {
     func getWeather(in city: City, for period: TimePeriod, completion: @escaping ((_ success: Bool, _ weatherObject: [WeatherCardObject]?) -> Void)) {
         let completeStringURL = baseStringURL + "appid=" + API_KEY + "&lat=\(city.latitude)" + "&lon=\(city.longitude)" + "&exclude=\(period.excludeOptions)"
         let url = URL(string: completeStringURL)!
-        print(completeStringURL)
         let request = URLRequest(url: url)
         task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
@@ -109,7 +119,6 @@ class WeatherService {
                 }
                 guard let response = _response as? HTTPURLResponse,
                       response.statusCode == 200 else {
-                    print("response not ok")
                     completion(false, nil)
                     return
                 }

@@ -18,6 +18,7 @@ class CurrencyVC : UIViewController {
     @IBOutlet weak var secondTextField: UITextField!
     @IBOutlet weak var convertButton: UIButton!
     @IBOutlet weak var convertButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var invertButton: UIButton!
     
     // MARK: - Properties
     lazy private var textFields : [UITextField] = [firstTextField, secondTextField]
@@ -34,6 +35,7 @@ class CurrencyVC : UIViewController {
     @IBAction func invertButtonTapped(_ sender: UIButton) {
         if baseCurrency == .euro {
             convertUITo(.usDollar, from: .euro)
+            
             CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value else { return }
                 let roundedValue = value.round(to: 3)
@@ -46,7 +48,9 @@ class CurrencyVC : UIViewController {
                     self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
                 }
             }
+            
             baseCurrency = .usDollar
+            animateViews(rotationAngle: .pi)
         } else {
             convertUITo(.euro, from: .usDollar)
             baseCurrency = .euro
@@ -62,6 +66,7 @@ class CurrencyVC : UIViewController {
                     self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.euro.info.symbol)"
                 }
             }
+            animateViews(rotationAngle: 0)
         }
     }
 
@@ -158,6 +163,20 @@ class CurrencyVC : UIViewController {
         // Button
         convertButton.setTitle("Convert \(baseCurrency.info.code) to \(currency.info.code)", for: .normal)
     }
+    
+    private func animateViews(rotationAngle: CGFloat) {
+        marketOrderLabel.alpha = 0
+        firstCurrencyLabel.alpha = 0
+        secondCurrencyLabel.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            self.marketOrderLabel.alpha = 1
+            self.firstCurrencyLabel.alpha = 1
+            self.secondCurrencyLabel.alpha = 1
+        }
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: []) {
+            self.invertButton.transform = CGAffineTransform(rotationAngle: rotationAngle)
+        }
+    }
 }
 
 
@@ -187,16 +206,4 @@ extension CurrencyVC : UITextFieldDelegate {
         tapDone()
         return true
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-    }
-
-    // TODO : Use this code with translate part
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//            if noteText.text == "" {
-//                noteText.textColor = greyColorPlaceholder
-//                noteText.text = placeholder
-//            }
-//        }
 }
