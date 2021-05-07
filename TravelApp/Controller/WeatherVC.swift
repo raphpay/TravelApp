@@ -147,7 +147,7 @@ class WeatherVC : UIViewController {
         }
         
         // Collection views
-        WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
+        weatherService.getWeather(in: .newYork, for: .day) { (success, _objects) in
             self.toggleActivityIndicator(show: true, for: .newYork, in: .collectionView)
             guard success,
                 let objects = _objects else {
@@ -158,7 +158,7 @@ class WeatherVC : UIViewController {
             self.destinationWeatherObjects = objects
             self.destinationCollectionView.reloadData()
         }
-        WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
+        weatherService.getWeather(in: .local, for: .day) { (success, _objects) in
             self.toggleActivityIndicator(show: true, for: .local, in: .collectionView)
             guard success,
                 let objects = _objects else {
@@ -226,7 +226,7 @@ class WeatherVC : UIViewController {
                 show ? destinationActivityIndicator.startAnimating() : destinationActivityIndicator.stopAnimating()
             } else {
                 destinationCollectionActivityIndicator.isHidden = !show
-                destinationCollectionView.isHidden = show
+                destinationCollectionView.alpha = show ? 0 : 1 // There was a bug with isHidden property
                 show ? destinationCollectionActivityIndicator.startAnimating() : destinationCollectionActivityIndicator.stopAnimating()
             }
         } else {
