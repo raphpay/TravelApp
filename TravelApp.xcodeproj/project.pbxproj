@@ -10,7 +10,6 @@
 		861485482624043600546202 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861485472624043600546202 /* Weather.swift */; };
 		861485512624045C00546202 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861485502624045C00546202 /* WeatherService.swift */; };
 		86245209262B11F2005E7D9F /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86245208262B11F1005E7D9F /* Icons.swift */; };
-		8634CA472633111E00D761D9 /* WeatherPossibleResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 8634CA462633111E00D761D9 /* WeatherPossibleResponse.json */; };
 		863CAFAA26333AFF005ECAAD /* HourlyWeather.json in Resources */ = {isa = PBXBuildFile; fileRef = 863CAFA926333AFF005ECAAD /* HourlyWeather.json */; };
 		863CAFB826333B22005ECAAD /* CurrentWeather.json in Resources */ = {isa = PBXBuildFile; fileRef = 863CAFB726333B22005ECAAD /* CurrentWeather.json */; };
 		863CAFC026333B34005ECAAD /* DailyWeather.json in Resources */ = {isa = PBXBuildFile; fileRef = 863CAFBF26333B34005ECAAD /* DailyWeather.json */; };
@@ -57,7 +56,6 @@
 		861485472624043600546202 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		861485502624045C00546202 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		86245208262B11F1005E7D9F /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
-		8634CA462633111E00D761D9 /* WeatherPossibleResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WeatherPossibleResponse.json; sourceTree = "<group>"; };
 		863CAFA926333AFF005ECAAD /* HourlyWeather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HourlyWeather.json; sourceTree = "<group>"; };
 		863CAFB726333B22005ECAAD /* CurrentWeather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrentWeather.json; sourceTree = "<group>"; };
 		863CAFBF26333B34005ECAAD /* DailyWeather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DailyWeather.json; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 			children = (
 				861485472624043600546202 /* Weather.swift */,
 				861485502624045C00546202 /* WeatherService.swift */,
-				8634CA462633111E00D761D9 /* WeatherPossibleResponse.json */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -356,7 +353,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8634CA472633111E00D761D9 /* WeatherPossibleResponse.json in Resources */,
 				866063B2261B44F300539AEE /* LaunchScreen.storyboard in Resources */,
 				866063AF261B44F300539AEE /* Assets.xcassets in Resources */,
 				866063AD261B44F100539AEE /* Main.storyboard in Resources */,
