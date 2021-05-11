@@ -9,11 +9,11 @@ import XCTest
 @testable import TravelApp
 
 class TranslationServiceTests: XCTestCase {
-    // Error - OK
-    // No data - Response ok -
-    // Incorrect data - Response ok -
-    // Correct data - Response not ok -
-    // Correct data - Response ok -
+    // Error
+    // No data - Response ok
+    // Incorrect data - Response ok
+    // Correct data - Response not ok
+    // Correct data - Response ok
     
     func testGivenCallbackFailed_WhenError_ThenSuccessIsFalseAndTextIsNil(){
         // Given

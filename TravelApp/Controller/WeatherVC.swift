@@ -27,14 +27,12 @@ class WeatherVC : UIViewController {
     @IBOutlet weak var destinationCityLabel: UILabel!
     @IBOutlet weak var destinationToggleButton: UIButton!
     @IBOutlet weak var destinationActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var destinationCollectionActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var localImageView: UIImageView!
     @IBOutlet weak var localTemperatureLabel: UILabel!
     @IBOutlet weak var localCityLabel: UILabel!
     @IBOutlet weak var localToggleButton: UIButton!
     @IBOutlet weak var localActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var localCollectionActivityIndicator: UIActivityIndicatorView!
     
     
     // MARK: - Actions
@@ -43,13 +41,11 @@ class WeatherVC : UIViewController {
             destinationDisplay = .today
             destinationToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .newYork, for: .hour) { (success, _objects) in
-                self.toggleActivityIndicator(show: true, for: .newYork, in: .bigView)
                 guard success,
                       let objects = _objects else {
                     self.presentAlert(message: TimePeriod.hour.errorMessage)
                     return
                 }
-                self.toggleActivityIndicator(show: false, for: .newYork, in: .bigView)
                 self.destinationWeatherObjects = []
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
@@ -58,13 +54,11 @@ class WeatherVC : UIViewController {
             destinationDisplay = .week
             destinationToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
-                self.toggleActivityIndicator(show: true, for: .newYork, in: .bigView)
                 guard success,
                       let objects = _objects else {
                     self.presentAlert(message: TimePeriod.day.errorMessage)
                     return
                 }
-                self.toggleActivityIndicator(show: false, for: .newYork, in: .bigView)
                 self.destinationWeatherObjects = []
                 self.destinationWeatherObjects = objects
                 self.destinationCollectionView.reloadData()
@@ -77,13 +71,11 @@ class WeatherVC : UIViewController {
             localDisplay = .today
             localToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
             WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
-                self.toggleActivityIndicator(show: true, for: .local, in: .collectionView)
                 guard success,
                       let objects = _objects else {
                     self.presentAlert(message: TimePeriod.hour.errorMessage)
                     return
                 }
-                self.toggleActivityIndicator(show: false, for: .local, in: .collectionView)
                 self.localWeatherObjects = []
                 self.localWeatherObjects = objects
                 self.localCollectionView.reloadData()
@@ -121,51 +113,47 @@ class WeatherVC : UIViewController {
         title = "Weather"
         configureCollectionViews()
         // Big weather
+        self.toggleActivityIndicator(show: true, for: .newYork)
         weatherService.getWeather(in: .newYork, for: .current) { (success, _objects) in
-            self.toggleActivityIndicator(show: true, for: .newYork, in: .bigView)
             guard success,
                   let objects = _objects else {
                 self.presentAlert(message: TimePeriod.current.errorMessage)
                 return
             }
-            self.toggleActivityIndicator(show: false, for: .newYork, in: .bigView)
+            self.toggleActivityIndicator(show: false, for: .newYork)
             self.destinationImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.destinationTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
-        
+        self.toggleActivityIndicator(show: true, for: .local)
         weatherService.getWeather(in: .local, for: .current) { (success, _objects) in
-            self.toggleActivityIndicator(show: true, for: .local, in: .bigView)
             guard success,
                   let objects = _objects else {
                 self.presentAlert(message: TimePeriod.current.errorMessage)
                 return
             }
-            self.toggleActivityIndicator(show: false, for: .local, in: .bigView)
+            self.toggleActivityIndicator(show: false, for: .local)
             self.localImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
             self.localTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
         // Collection views
         weatherService.getWeather(in: .newYork, for: .day) { (success, _objects) in
-            self.toggleActivityIndicator(show: true, for: .newYork, in: .collectionView)
             guard success,
                 let objects = _objects else {
                 self.presentAlert(message: TimePeriod.day.errorMessage)
                 return
             }
-            self.toggleActivityIndicator(show: false, for: .newYork, in: .collectionView)
             self.destinationWeatherObjects = objects
             self.destinationCollectionView.reloadData()
         }
+        
         weatherService.getWeather(in: .local, for: .day) { (success, _objects) in
-            self.toggleActivityIndicator(show: true, for: .local, in: .collectionView)
             guard success,
                 let objects = _objects else {
                 self.presentAlert(message: TimePeriod.day.errorMessage)
                 return
             }
-            self.toggleActivityIndicator(show: false, for: .local, in: .collectionView)
             self.localWeatherObjects = objects
             self.localCollectionView.reloadData()
         }
@@ -217,29 +205,17 @@ class WeatherVC : UIViewController {
         localCollectionView.dataSource = self
     }
     
-    private func toggleActivityIndicator(show : Bool, for city: City, in view: ViewType) {
+    private func toggleActivityIndicator(show : Bool, for city: City) {
         if city == .newYork {
-            if view == .bigView {
-                destinationActivityIndicator.isHidden = !show
-                destinationImageView.isHidden = show
-                destinationTemperatureLabel.isHidden = show
-                show ? destinationActivityIndicator.startAnimating() : destinationActivityIndicator.stopAnimating()
-            } else {
-                destinationCollectionActivityIndicator.isHidden = !show
-                destinationCollectionView.alpha = show ? 0 : 1 // There was a bug with isHidden property
-                show ? destinationCollectionActivityIndicator.startAnimating() : destinationCollectionActivityIndicator.stopAnimating()
-            }
+            destinationActivityIndicator.isHidden = !show
+            destinationImageView.isHidden = show
+            destinationTemperatureLabel.alpha = show ? 0 : 1
+            show ? destinationActivityIndicator.startAnimating() : destinationActivityIndicator.stopAnimating()
         } else {
-            if view == .bigView {
-                localActivityIndicator.isHidden = !show
-                localImageView.isHidden = show
-                localTemperatureLabel.isHidden = show
-                show ? localActivityIndicator.startAnimating() : localActivityIndicator.stopAnimating()
-            } else {
-                localCollectionActivityIndicator.isHidden = !show
-                localCollectionView.isHidden = show
-                show ? localCollectionActivityIndicator.startAnimating() : localCollectionActivityIndicator.stopAnimating()
-            }
+            localActivityIndicator.isHidden = !show
+            localImageView.isHidden = show
+            localTemperatureLabel.isHidden = show
+            show ? localActivityIndicator.startAnimating() : localActivityIndicator.stopAnimating()
         }
     }
 }

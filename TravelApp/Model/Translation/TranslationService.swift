@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Enumerations
 enum Language {
     case english, french
     
@@ -47,7 +48,6 @@ enum Language {
     }
 }
 
-
 class TranslationService {
     
     // MARK: - Properties
@@ -69,7 +69,6 @@ class TranslationService {
     func getTranslation(baseText: String, targetLanguage: Language, completion: @escaping ((_ success: Bool, _ translatedText: String?) -> Void)) {
         let completeStringURL = "https://translation.googleapis.com/language/translate/v2?key=\(API_KEY)&q=\(baseText)&target=\(targetLanguage.code)&format=text"
         let urlString = completeStringURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        print(completeStringURL)
         guard let url = URL(string: urlString!) else {
             completion(false, nil)
             return
@@ -86,7 +85,6 @@ class TranslationService {
                     completion(false, nil)
                     return
                 }
-                print(data)
                 guard let response = _response as? HTTPURLResponse,
                       response.statusCode == 200 else {
                     completion(false, nil)

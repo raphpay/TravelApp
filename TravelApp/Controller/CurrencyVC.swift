@@ -69,7 +69,6 @@ class CurrencyVC : UIViewController {
             animateViews(rotationAngle: 0)
         }
     }
-
     @IBAction func firstTextFieldDidBegin(_ sender: Any) {
         firstTextFieldIsOpen = true
         secondTextFieldIsOpen = false
@@ -78,7 +77,6 @@ class CurrencyVC : UIViewController {
         firstTextFieldIsOpen = false
         secondTextFieldIsOpen = true
     }
-    
     @IBAction func convertButtonTapped(_ sender: UIButton) {
         if baseCurrency == .euro {
             CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
@@ -103,6 +101,15 @@ class CurrencyVC : UIViewController {
         self.view.endEditing(true)
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.convertButtonBottomConstraint.constant = keyboardSize.height - 60
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.convertButtonBottomConstraint.constant = 16
+    }
     // MARK: - Override Methods
     override func viewDidLoad() {
         title = "Currency"
@@ -116,16 +123,6 @@ class CurrencyVC : UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            self.convertButtonBottomConstraint.constant = keyboardSize.height - 60
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.convertButtonBottomConstraint.constant = 16
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
