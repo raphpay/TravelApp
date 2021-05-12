@@ -9,7 +9,6 @@ import UIKit
 
 class TranslationVC : UIViewController {
     
-    
     // MARK: - Outlets
     @IBOutlet weak var firstBackgroundView: UIView!
     @IBOutlet weak var secondBackgroundView: UIView!

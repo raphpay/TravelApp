@@ -14,10 +14,6 @@ enum ButtonTitle: String {
     case today = "Today"
 }
 
-enum ViewType {
-    case bigView, collectionView
-}
-
 
 class WeatherVC : UIViewController {
     

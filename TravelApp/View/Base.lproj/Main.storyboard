@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbJ-Pm-kta">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-cR-3Ia">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="810"/>
@@ -26,7 +26,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbj-ib-iJX">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="430"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud.rain.fill" translatesAutoresizingMaskIntoConstraints="NO" id="1pE-wG-AQu">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear" translatesAutoresizingMaskIntoConstraints="NO" id="1pE-wG-AQu">
                                                         <rect key="frame" x="150" y="10" width="75" height="75"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="75" id="Rwo-YB-2oQ"/>
@@ -82,7 +82,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWD-cf-Wpi">
                                                 <rect key="frame" x="0.0" y="430" width="375" height="380"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud.rain.fill" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-WQ-432">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-WQ-432">
                                                         <rect key="frame" x="150" y="10" width="75" height="75"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="75" id="nTd-0q-uWw"/>
@@ -160,7 +160,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="xqT-2u-VFI">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="x4G-eU-E9l">
+                        <view key="titleView" contentMode="scaleToFill" ambiguous="YES" id="x4G-eU-E9l">
                             <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="separatorColor"/>
@@ -622,9 +622,12 @@
     <resources>
         <image name="Invert-Button" width="40" height="40"/>
         <image name="Translate-Button" width="85" height="85"/>
+        <image name="arrow.left.arrow.right.circle.fill" width="24" height="25"/>
         <image name="arrow.left.arrow.right.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="cloud.rain.fill" width="85" height="86"/>
+        <image name="clear" width="51" height="52"/>
         <image name="cloud.sun.fill" catalog="system" width="128" height="93"/>
+        <image name="cloud.sun.fill" width="34" height="25"/>
+        <image name="dollarsign.circle.fill" width="24" height="25"/>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="fr_flag" width="84" height="85"/>
         <image name="usa_flag" width="84" height="85"/>

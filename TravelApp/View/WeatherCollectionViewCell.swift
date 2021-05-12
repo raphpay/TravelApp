@@ -9,9 +9,11 @@ import UIKit
 
 class WeatherCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
     static let localCellID = "localCellID"
     static let destinationCellID = "destinationCellID"
     
+    // MARK: - Views
     private let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +40,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCellUI()
@@ -47,6 +50,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Public methods
     public func configure(icon: UIImage, degrees: Double, time: String) {
         // TODO: Verify the type of the parameters with the conversion from the API
         weatherImage.image = icon
