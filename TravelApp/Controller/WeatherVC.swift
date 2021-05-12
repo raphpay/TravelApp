@@ -221,7 +221,7 @@ class WeatherVC : UIViewController {
 }
 
 
-// MARK: - Collection View
+// MARK: - Extensions
 extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

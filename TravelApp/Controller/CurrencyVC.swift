@@ -20,16 +20,6 @@ class CurrencyVC : UIViewController {
     @IBOutlet weak var convertButtonBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var invertButton: UIButton!
     
-    // MARK: - Properties
-    lazy private var textFields : [UITextField] = [firstTextField, secondTextField]
-    var firstTextFieldIsOpen = false
-    var secondTextFieldIsOpen = false
-    var baseCurrency: CurrencyType = .euro
-    var firstValue: Double = 0
-    var secondValue: Double = 0
-    var euroValue: Double = 1
-    var usDollarValue: Double = 1
-    
     
     // MARK: - Actions
     @IBAction func invertButtonTapped(_ sender: UIButton) {
@@ -96,6 +86,16 @@ class CurrencyVC : UIViewController {
             }
         }
     }
+    
+    // MARK: - Properties
+    lazy private var textFields : [UITextField] = [firstTextField, secondTextField]
+    var firstTextFieldIsOpen = false
+    var secondTextFieldIsOpen = false
+    var baseCurrency: CurrencyType = .euro
+    var firstValue: Double = 0
+    var secondValue: Double = 0
+    var euroValue: Double = 1
+    var usDollarValue: Double = 1
     
     @objc func tapDone() {
         self.view.endEditing(true)
