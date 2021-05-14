@@ -181,7 +181,6 @@ class CurrencyVC : UIViewController {
 extension CurrencyVC : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        // TODO : Convert the value
         guard let baseText = textField.text,
              let baseValue = Double(baseText) else { return false }
         let roundedBaseValue = baseValue.round(to: 3)

@@ -196,7 +196,6 @@ class WeatherService {
         }
         let weatherID = responseJSON.current.weather[0].id
         let temperatureInKelvin = responseJSON.current.temp
-        // TODO : Get a rounded Int
         let convertedTemperature = temperatureInKelvin.convertFromKelvinToCelsius().round(to: 0)
         let object = [WeatherCardObject(date: "", temperature: convertedTemperature, iconId: weatherID)]
         completion(true, object)

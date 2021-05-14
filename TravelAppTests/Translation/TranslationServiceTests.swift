@@ -73,7 +73,7 @@ class TranslationServiceTests: XCTestCase {
         
         // When
         let expectation = XCTestExpectation(description: "Incorrect response")
-        translationService.getTranslation(baseText: FakeTranslationResponseData.baseText, targetLanguage: .french) { (success, text) in
+        translationService.getTranslation(baseText: FakeTranslationResponseData.frenchBaseText, targetLanguage: .english) { (success, text) in
             // Then
             XCTAssertFalse(success)
             XCTAssertNil(text)

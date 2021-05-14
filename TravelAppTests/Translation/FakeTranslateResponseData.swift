@@ -18,6 +18,7 @@ class FakeTranslationResponseData {
     static let translateIncorrectData = "erreur".data(using: .utf8)!
 
     static let baseText = "Hello"
+    static let frenchBaseText = "Salut"
     static let translatedText = "Bonjour"
     
     // We put a random URL because we only need the HTTP status code

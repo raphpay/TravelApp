@@ -52,7 +52,6 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public methods
     public func configure(icon: UIImage, degrees: Double, time: String) {
-        // TODO: Verify the type of the parameters with the conversion from the API
         weatherImage.image = icon
         degreesLabel.text = "\(degrees)°C"
         if let intTime = Int(time) {

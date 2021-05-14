@@ -7,9 +7,6 @@
 
 import Foundation
 
-// TODO : Fix button to keyboard
-// TODO : Terminer switch conversion
-
 // MARK: - Enumeration
 enum CurrencyType {
     case euro
@@ -45,10 +42,7 @@ class CurrencyConverterService {
     
     // MARK: - Public Methods
     func getRate(from base: CurrencyType, to rate: CurrencyType, completionHandler: @escaping ((_ rate: Double?, _ success: Bool) -> Void)) {
-        guard let request = createRequest() else {
-            completionHandler(nil, false)
-            return
-        }
+        let request = createRequest()
         task?.cancel()
         task = session.dataTask(with: request) { _data, _response, _error in
             DispatchQueue.main.async {
@@ -83,7 +77,7 @@ class CurrencyConverterService {
     
     
     // MARK: - Helper Methods
-    private func createRequest() -> URLRequest? {
+    private func createRequest() -> URLRequest {
         let completeEndPoint = "\(baseURL)\(ACCESS_KEY)&base=\(CurrencyType.euro.info.code)&symbols=\(CurrencyType.usDollar.info.code)"
         let url = URL(string: completeEndPoint)!
         let request = URLRequest(url: url)
