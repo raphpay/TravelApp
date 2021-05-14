@@ -55,9 +55,11 @@ class TranslationVC : UIViewController {
     
     @IBAction func entryCopyButtonTapped(_ sender: UIButton) {
         copyToClipboard(from: entryTextView)
+        presentAlert(title: "Message copied", message: "Text successfully copy to clipboard", preferredStyle: .alert)
     }
     @IBAction func translatedTextCopyButtonTapped(_ sender: Any) {
         copyToClipboard(from: translatedTextView)
+        presentAlert(title: "Message copied", message: "Text successfully copy to clipboard", preferredStyle: .alert)
     }
     
     @objc func closeKeyboard() {

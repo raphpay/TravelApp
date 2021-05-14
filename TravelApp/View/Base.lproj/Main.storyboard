@@ -165,7 +165,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="separatorColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="2" id="uAI-qz-noO"/>
+                                <constraint firstAttribute="height" constant="2" placeholder="YES" id="uAI-qz-noO"/>
                             </constraints>
                         </view>
                     </navigationItem>
@@ -387,7 +387,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="w1r-YB-Mj4">
-                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Y1J-hH-oBE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="782"/>
@@ -622,12 +622,9 @@
     <resources>
         <image name="Invert-Button" width="40" height="40"/>
         <image name="Translate-Button" width="85" height="85"/>
-        <image name="arrow.left.arrow.right.circle.fill" width="24" height="25"/>
         <image name="arrow.left.arrow.right.circle.fill" catalog="system" width="128" height="121"/>
         <image name="clear" width="51" height="52"/>
         <image name="cloud.sun.fill" catalog="system" width="128" height="93"/>
-        <image name="cloud.sun.fill" width="34" height="25"/>
-        <image name="dollarsign.circle.fill" width="24" height="25"/>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="fr_flag" width="84" height="85"/>
         <image name="usa_flag" width="84" height="85"/>
