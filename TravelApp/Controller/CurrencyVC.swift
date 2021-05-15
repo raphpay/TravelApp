@@ -26,7 +26,7 @@ class CurrencyVC : UIViewController {
         if baseCurrency == .euro {
             convertUITo(.usDollar, from: .euro)
             
-            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
+            service.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value else {
                     self.presentAlert(message: ErrorMessages.currency.rawValue)
                     return
@@ -47,7 +47,7 @@ class CurrencyVC : UIViewController {
         } else {
             convertUITo(.euro, from: .usDollar)
             baseCurrency = .euro
-            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+            service.getRate(from: .euro, to: .usDollar) { (_value, success) in
                 guard let value = _value else {
                     self.presentAlert(message: ErrorMessages.currency.rawValue)
                     return
@@ -75,7 +75,7 @@ class CurrencyVC : UIViewController {
     }
     @IBAction func convertButtonTapped(_ sender: UIButton) {
         if baseCurrency == .euro {
-            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+            service.getRate(from: .euro, to: .usDollar) { (_value, success) in
                 guard let value = _value,
                         let baseValue = self.getValue(from: self.firstTextField) else {
                     self.presentAlert(message: ErrorMessages.currencyWrongEntry.rawValue)
@@ -91,7 +91,7 @@ class CurrencyVC : UIViewController {
                 self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
             }
         } else {
-            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
+            service.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value,
                         let baseValue = self.getValue(from: self.firstTextField) else {
                     self.presentAlert(message: ErrorMessages.currencyWrongEntry.rawValue)
@@ -119,6 +119,7 @@ class CurrencyVC : UIViewController {
     var secondValue: Double = 0
     var euroValue: Double = 1
     var usDollarValue: Double = 1
+    private let service = CurrencyConverterService.shared
     
     @objc func tapDone() {
         self.view.endEditing(true)
@@ -138,7 +139,7 @@ class CurrencyVC : UIViewController {
         title = "Currency"
         setupUI()
         setupTextFields()
-        CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+        service.getRate(from: .euro, to: .usDollar) { (_value, success) in
             guard let value = _value else {
                 self.presentAlert(message: ErrorMessages.currency.rawValue)
                 return
@@ -211,7 +212,7 @@ extension CurrencyVC : UITextFieldDelegate {
              let baseValue = Double(baseText) else { return false }
         let roundedBaseValue = baseValue.round(to: 3)
         if baseCurrency == .euro {
-            CurrencyConverterService.shared.getRate(from: .euro, to: .usDollar) { (_value, success) in
+            service.getRate(from: .euro, to: .usDollar) { (_value, success) in
                 guard let value = _value else {
                     self.presentAlert(message: ErrorMessages.currency.rawValue)
                     return
@@ -221,7 +222,7 @@ extension CurrencyVC : UITextFieldDelegate {
                 self.secondTextField.text = "\(calculatedRoundValue)\(CurrencyType.usDollar.info.symbol)"
             }
         } else {
-            CurrencyConverterService.shared.getRate(from: .usDollar, to: .euro) { (_value, success) in
+            service.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value else {
                     self.presentAlert(message: ErrorMessages.currency.rawValue)
                     return
