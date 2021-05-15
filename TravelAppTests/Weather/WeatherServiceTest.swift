@@ -231,7 +231,7 @@ class WeatherServiceTest: XCTestCase {
     // Correct data - Response not ok - OK
     // Correct data - Response ok - OK
     
-    func testGetHourlyWeatherFailedWithErrorInLocalCity() {
+    func testGetHourlyWeatherFailedWithErrorInNewYorkCity() {
         // Given
         let fakeSession = WeatherURLSessionFake(data: nil,
                                                 response: nil, error: FakeWeatherResponseData.error)
@@ -239,7 +239,7 @@ class WeatherServiceTest: XCTestCase {
         
         // When
         let expectation = XCTestExpectation(description: "Error")
-        weatherService.getWeather(in: .local, for: .day) { (success, _objects) in
+        weatherService.getWeather(in: .newYork, for: .day) { (success, _objects) in
             // Then
             XCTAssertFalse(success)
             XCTAssertNil(_objects)

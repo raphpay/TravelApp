@@ -99,4 +99,15 @@ class TranslationServiceTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
+    
+    // MARK: - Enumerations tests
+    func testGivenLanguageIsEnglish_WhenSearchingFlag_ThenUSAFlagIsReturned(){
+        let baseLanguage = Language.english
+        XCTAssertEqual(baseLanguage.flag, Language.english.flag)
+    }
+    
+    func testGivenLanguageIsFrench_WhenSearchingFlag_ThenFrenchFlagIsReturned(){
+        let baseLanguage = Language.french
+        XCTAssertEqual(baseLanguage.flag, Language.french.flag)
+    }
 }
