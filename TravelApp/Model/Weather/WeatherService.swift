@@ -22,17 +22,6 @@ enum TimePeriod {
             return "hourly,minutely,alerts,current"
         }
     }
-    
-    var errorMessage: String {
-        switch self {
-        case .current:
-            return "Unable to load current weather. \nPlease try again later"
-        case .hour:
-            return "Unable to load hourly weather. \nPlease try again later"
-        case .day:
-            return "Unable to load current weather. \nPlease try again later"
-        }
-    }
 }
 
 enum City {

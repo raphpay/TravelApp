@@ -36,10 +36,10 @@ class WeatherVC : UIViewController {
         if destinationDisplay == .week {
             destinationDisplay = .today
             destinationToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
-            WeatherService.shared.getWeather(in: .newYork, for: .hour) { (success, _objects) in
+            service.getWeather(in: .newYork, for: .hour) { (success, _objects) in
                 guard success,
                       let objects = _objects else {
-                    self.presentAlert(message: TimePeriod.hour.errorMessage)
+                    self.presentAlert(message: Alert.hourlyWeather.message)
                     return
                 }
                 self.destinationWeatherObjects = []
@@ -49,10 +49,10 @@ class WeatherVC : UIViewController {
         } else {
             destinationDisplay = .week
             destinationToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
-            WeatherService.shared.getWeather(in: .newYork, for: .day) { (success, _objects) in
+            service.getWeather(in: .newYork, for: .day) { (success, _objects) in
                 guard success,
                       let objects = _objects else {
-                    self.presentAlert(message: TimePeriod.day.errorMessage)
+                    self.presentAlert(message: Alert.dailyWeather.message)
                     return
                 }
                 self.destinationWeatherObjects = []
@@ -66,10 +66,10 @@ class WeatherVC : UIViewController {
         if localDisplay == .week {
             localDisplay = .today
             localToggleButton.setTitle(ButtonTitle.today.rawValue, for: .normal)
-            WeatherService.shared.getWeather(in: .local, for: .hour) { (success, _objects) in
+            service.getWeather(in: .local, for: .hour) { (success, _objects) in
                 guard success,
                       let objects = _objects else {
-                    self.presentAlert(message: TimePeriod.hour.errorMessage)
+                    self.presentAlert(message: Alert.hourlyWeather.message)
                     return
                 }
                 self.localWeatherObjects = []
@@ -79,10 +79,10 @@ class WeatherVC : UIViewController {
         } else {
             localDisplay = .week
             localToggleButton.setTitle(ButtonTitle.week.rawValue, for: .normal)
-            WeatherService.shared.getWeather(in: .local, for: .day) { (success, _objects) in
+            service.getWeather(in: .local, for: .day) { (success, _objects) in
                 guard success,
                       let objects = _objects else {
-                    self.presentAlert(message: TimePeriod.day.errorMessage)
+                    self.presentAlert(message: Alert.dailyWeather.message)
                     return
                 }
                 self.localWeatherObjects = []
@@ -98,10 +98,11 @@ class WeatherVC : UIViewController {
     private var localCollectionView: UICollectionView! = nil
     private var destinationDisplay : ButtonTitle = .week
     private var localDisplay : ButtonTitle = .week
-    private let weatherService = WeatherService.shared
     
     var destinationWeatherObjects: [WeatherCardObject] = []
     var localWeatherObjects: [WeatherCardObject] = []
+    
+    private let service = WeatherService.shared
     
     
     // MARK: - Override Methods
@@ -110,44 +111,44 @@ class WeatherVC : UIViewController {
         configureCollectionViews()
         // Big weather
         self.toggleActivityIndicator(show: true, for: .newYork)
-        weatherService.getWeather(in: .newYork, for: .current) { (success, _objects) in
+        service.getWeather(in: .newYork, for: .current) { (success, _objects) in
             guard success,
                   let objects = _objects else {
-                self.presentAlert(message: TimePeriod.current.errorMessage)
+                self.presentAlert(message: Alert.currentWeather.message)
                 return
             }
             self.toggleActivityIndicator(show: false, for: .newYork)
-            self.destinationImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
+            self.destinationImageView.image =  self.service.convertIcon(id: objects[0].iconId)
             self.destinationTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
         self.toggleActivityIndicator(show: true, for: .local)
-        weatherService.getWeather(in: .local, for: .current) { (success, _objects) in
+        service.getWeather(in: .local, for: .current) { (success, _objects) in
             guard success,
                   let objects = _objects else {
-                self.presentAlert(message: TimePeriod.current.errorMessage)
+                self.presentAlert(message: Alert.currentWeather.message)
                 return
             }
             self.toggleActivityIndicator(show: false, for: .local)
-            self.localImageView.image =  WeatherService.shared.convertIcon(id: objects[0].iconId)
+            self.localImageView.image =  self.service.convertIcon(id: objects[0].iconId)
             self.localTemperatureLabel.text = "\(objects[0].temperature)°C"
         }
         
         // Collection views
-        weatherService.getWeather(in: .newYork, for: .day) { (success, _objects) in
+        service.getWeather(in: .newYork, for: .day) { (success, _objects) in
             guard success,
                 let objects = _objects else {
-                self.presentAlert(message: TimePeriod.day.errorMessage)
+                self.presentAlert(message: Alert.dailyWeather.message)
                 return
             }
             self.destinationWeatherObjects = objects
             self.destinationCollectionView.reloadData()
         }
         
-        weatherService.getWeather(in: .local, for: .day) { (success, _objects) in
+        service.getWeather(in: .local, for: .day) { (success, _objects) in
             guard success,
                 let objects = _objects else {
-                self.presentAlert(message: TimePeriod.day.errorMessage)
+                self.presentAlert(message: Alert.dailyWeather.message)
                 return
             }
             self.localWeatherObjects = objects
@@ -232,13 +233,13 @@ extension WeatherVC : UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == destinationCollectionView {
             let destinationCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
             let object = destinationWeatherObjects[indexPath.item]
-            guard let image = WeatherService.shared.convertIcon(id: object.iconId) else { return UICollectionViewCell() }
+            guard let image = service.convertIcon(id: object.iconId) else { return UICollectionViewCell() }
             destinationCell.configure(icon: image, degrees: object.temperature, time: object.date)
             return destinationCell
         } else {
             let localCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.localCellID, for: indexPath) as! WeatherCollectionViewCell
             let object = localWeatherObjects[indexPath.item]
-            guard let image = WeatherService.shared.convertIcon(id: object.iconId) else { return UICollectionViewCell() }
+            guard let image = service.convertIcon(id: object.iconId) else { return UICollectionViewCell() }
             localCell.configure(icon: image, degrees: object.temperature, time: object.date)
             return localCell
         }

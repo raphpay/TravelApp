@@ -110,7 +110,7 @@ class TranslationVC : UIViewController {
         service.getTranslation(baseText: text, targetLanguage: targetLanguage) { (success, _translatedText) in
             guard success,
                   let translatedText = _translatedText else {
-                self.presentAlert(message: ErrorMessages.translate.rawValue)
+                self.presentAlert(message: Alert.translate.rawValue)
                 return
             }
             self.translatedTextView.text = translatedText
@@ -156,7 +156,7 @@ extension TranslationVC : UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         guard let text = textView.text,
               Int(text) == nil else {
-            self.presentAlert(message: ErrorMessages.translateWrongEntry.rawValue)
+            self.presentAlert(message: Alert.translateWrongEntry.message)
             return
         }
         translate(text: text)

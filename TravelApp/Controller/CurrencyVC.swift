@@ -28,7 +28,7 @@ class CurrencyVC : UIViewController {
             
             service.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value else {
-                    self.presentAlert(message: ErrorMessages.currency.rawValue)
+                    self.presentAlert(message: Alert.currency.message)
                     return
                 }
                 let roundedValue = value.round(to: 3)
@@ -49,7 +49,7 @@ class CurrencyVC : UIViewController {
             baseCurrency = .euro
             service.getRate(from: .euro, to: .usDollar) { (_value, success) in
                 guard let value = _value else {
-                    self.presentAlert(message: ErrorMessages.currency.rawValue)
+                    self.presentAlert(message: Alert.currency.message)
                     return
                 }
                 let roundedValue = value.round(to: 3)
@@ -78,12 +78,12 @@ class CurrencyVC : UIViewController {
             service.getRate(from: .euro, to: .usDollar) { (_value, success) in
                 guard let value = _value,
                         let baseValue = self.getValue(from: self.firstTextField) else {
-                    self.presentAlert(message: ErrorMessages.currencyWrongEntry.rawValue)
+                    self.presentAlert(message: Alert.currencyWrongEntry.message)
                     return
                 }
                 
                 guard success else {
-                    self.presentAlert(message: ErrorMessages.currency.rawValue)
+                    self.presentAlert(message: Alert.currency.message)
                     return
                 }
                 let calculatedValue = baseValue * value
@@ -94,11 +94,11 @@ class CurrencyVC : UIViewController {
             service.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value,
                         let baseValue = self.getValue(from: self.firstTextField) else {
-                    self.presentAlert(message: ErrorMessages.currencyWrongEntry.rawValue)
+                    self.presentAlert(message: Alert.currencyWrongEntry.message)
                     return
                 }
                 guard success else {
-                    self.presentAlert(message: ErrorMessages.currency.rawValue)
+                    self.presentAlert(message: Alert.currency.message)
                     return
                 }
                 
@@ -141,7 +141,7 @@ class CurrencyVC : UIViewController {
         setupTextFields()
         service.getRate(from: .euro, to: .usDollar) { (_value, success) in
             guard let value = _value else {
-                self.presentAlert(message: ErrorMessages.currency.rawValue)
+                self.presentAlert(message: Alert.currency.message)
                 return
             }
             let roundedValue = value.round(to: 3)
@@ -214,7 +214,7 @@ extension CurrencyVC : UITextFieldDelegate {
         if baseCurrency == .euro {
             service.getRate(from: .euro, to: .usDollar) { (_value, success) in
                 guard let value = _value else {
-                    self.presentAlert(message: ErrorMessages.currency.rawValue)
+                    self.presentAlert(message: Alert.currency.message)
                     return
                 }
                 let calculatedValue = roundedBaseValue * value // Cross product
@@ -224,7 +224,7 @@ extension CurrencyVC : UITextFieldDelegate {
         } else {
             service.getRate(from: .usDollar, to: .euro) { (_value, success) in
                 guard let value = _value else {
-                    self.presentAlert(message: ErrorMessages.currency.rawValue)
+                    self.presentAlert(message: Alert.currency.message)
                     return
                 }
                 let calculatedValue = roundedBaseValue * value
