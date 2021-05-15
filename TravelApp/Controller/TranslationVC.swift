@@ -69,6 +69,7 @@ class TranslationVC : UIViewController {
     
     // MARK: - Properties
     var baseLanguage = Language.french
+    private let service = TranslationService.shared
     
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -106,9 +107,10 @@ class TranslationVC : UIViewController {
             targetLanguage = .english
         }
         
-        TranslationService.shared.getTranslation(baseText: text, targetLanguage: targetLanguage) { (success, _translatedText) in
+        service.getTranslation(baseText: text, targetLanguage: targetLanguage) { (success, _translatedText) in
             guard success,
                   let translatedText = _translatedText else {
+                self.presentAlert(message: ErrorMessages.translate.rawValue)
                 return
             }
             self.translatedTextView.text = translatedText
@@ -152,7 +154,11 @@ extension TranslationVC : UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        guard let text = textView.text else { return }
+        guard let text = textView.text,
+              Int(text) == nil else {
+            self.presentAlert(message: ErrorMessages.translateWrongEntry.rawValue)
+            return
+        }
         translate(text: text)
         textView.resignFirstResponder()
     }
@@ -160,10 +166,6 @@ extension TranslationVC : UITextViewDelegate {
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         resetPlaceHolders(in: textView)
         textView.resignFirstResponder()
-        guard let text = textView.text else {
-            return false
-        }
-        translate(text: text)
         return true
     }
 }

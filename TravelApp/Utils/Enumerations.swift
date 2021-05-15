@@ -11,5 +11,6 @@ enum ErrorMessages: String {
     case currency = "Can't retrieve rate informations. \nPlease try again later."
     case currencyWrongEntry = "Can't convert this entry into a number. \nPlease enter numbers instead."
     case translate = "Can't translate text.\nPlease try again later."
+    case translateWrongEntry = "Can't translate this entry.\nPlease enter a text instead."
     case weather = "Can't retrieve weather informations.\nPlease try again later."
 }
