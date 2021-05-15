@@ -110,4 +110,5 @@ class TranslationServiceTests: XCTestCase {
         let baseLanguage = Language.french
         XCTAssertEqual(baseLanguage.flag, Language.french.flag)
     }
+    
 }
