@@ -7,22 +7,6 @@
 
 import Foundation
 
-// MARK: - Enumeration
-enum CurrencyType {
-    case euro
-    case usDollar
-
-    var info: (code: String, symbol: String) {
-        switch self {
-        case .euro:
-            return ("EUR", "€")
-        case .usDollar:
-            return ("USD", "$")
-        }
-    }
-}
-
-
 class CurrencyConverterService {
     
     // MARK: - Properties

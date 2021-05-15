@@ -5,48 +5,7 @@
 //  Created by Raphaël Payet on 30/04/2021.
 //
 
-import UIKit
-
-// MARK: - Enumerations
-enum Language {
-    case english, french
-    
-    var code: String {
-        switch self {
-        case .english:
-            return "en"
-        case .french:
-            return "fr"
-        }
-    }
-    
-    var flag: UIImage {
-        switch self {
-        case .english:
-            return UIImage(named: "usa_flag")!
-        case .french:
-            return UIImage(named: "fr_flag")!
-        }
-    }
-    
-    var displayText: String {
-        switch self {
-        case .english:
-            return "English"
-        case .french:
-            return "Français"
-        }
-    }
-    
-    var textViewPlaceholder: String {
-        switch self {
-        case .english:
-            return "Hello ! Enter the text to translate here!"
-        case .french:
-            return "Bonjour ! Entrez le texte à traduire ici !"
-        }
-    }
-}
+import Foundation
 
 class TranslationService {
     
@@ -67,7 +26,7 @@ class TranslationService {
     
     // MARK: - Public functions
     func getTranslation(baseText: String, targetLanguage: Language, completion: @escaping ((_ success: Bool, _ translatedText: String?) -> Void)) {
-        let completeStringURL = "https://translation.googleapis.com/language/translate/v2?key=\(API_KEY)&q=\(baseText)&target=\(targetLanguage.code)&format=text"
+        let completeStringURL = "https://translation.googleapis.com/language/translate/v2?key=\(API_KEY)&q=\(baseText)&target=\(targetLanguage.info.code)&format=text"
         let urlString = completeStringURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         guard let url = URL(string: urlString!) else {
             completion(false, nil)

@@ -7,8 +7,10 @@
 
 import Foundation
 
+
 enum Alert: String {
     case currency, currencyWrongEntry, translate, translateWrongEntry, currentWeather, dailyWeather, hourlyWeather
+    
     var message : String {
         switch self {
         case .currency:

@@ -26,28 +26,28 @@ class TranslationVC : UIViewController {
     @IBAction func translateButtonTapped(_ sender: UIButton) {
         
         if baseLanguage == .french {
-            leftFlag.image = Language.english.flag
-            leftLanguageLabel.text = Language.english.displayText
+            leftFlag.image = UIImage(named: Language.english.flag)
+            leftLanguageLabel.text = Language.english.info.text
             
-            rightFlag.image = Language.french.flag
-            rightLanguageLabel.text = Language.french.displayText
+            rightFlag.image = UIImage(named: Language.french.flag)
+            rightLanguageLabel.text = Language.french.info.text
             
             baseLanguage = .english
             
-            entryTextView.text = Language.english.textViewPlaceholder
-            translatedTextView.text = Language.french.textViewPlaceholder
+            entryTextView.text = Language.english.info.placeholder
+            translatedTextView.text = Language.french.info.placeholder
             animateViews(rotationAngle: .pi)
         } else {
-            leftFlag.image = Language.french.flag
-            leftLanguageLabel.text = Language.french.displayText
+            leftFlag.image = UIImage(named: Language.french.flag)
+            leftLanguageLabel.text = Language.french.info.text
             
-            rightFlag.image = Language.english.flag
-            rightLanguageLabel.text = Language.english.displayText
+            rightFlag.image = UIImage(named: Language.english.flag)
+            rightLanguageLabel.text = Language.english.info.text
             
             baseLanguage = .french
             
-            entryTextView.text = Language.french.textViewPlaceholder
-            translatedTextView.text = Language.english.textViewPlaceholder
+            entryTextView.text = Language.french.info.placeholder
+            translatedTextView.text = Language.english.info.placeholder
             
             animateViews(rotationAngle: 0)
         }
@@ -92,9 +92,9 @@ class TranslationVC : UIViewController {
         if textView.text == "" {
             textView.textColor = UIColor(named: "placeholder")
             if baseLanguage == .french {
-                textView.text = Language.french.textViewPlaceholder
+                textView.text = Language.french.info.placeholder
             } else {
-                textView.text = Language.english.textViewPlaceholder
+                textView.text = Language.english.info.placeholder
             }
         }
     }
