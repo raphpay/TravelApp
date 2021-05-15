@@ -57,7 +57,7 @@
                                                             <action selector="destinationButtonTapped:" destination="O8b-ie-RPq" eventType="touchUpInside" id="Ph9-5C-RM8"/>
                                                         </connections>
                                                     </button>
-                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="zxp-De-Mly">
+                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zxp-De-Mly">
                                                         <rect key="frame" x="177.5" y="40" width="20" height="20"/>
                                                     </activityIndicatorView>
                                                 </subviews>
@@ -113,7 +113,7 @@
                                                             <action selector="localButtonTapped:" destination="O8b-ie-RPq" eventType="touchUpInside" id="4pJ-Tf-ia8"/>
                                                         </connections>
                                                     </button>
-                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="fFW-qf-dkg">
+                                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fFW-qf-dkg">
                                                         <rect key="frame" x="177.5" y="40" width="20" height="20"/>
                                                     </activityIndicatorView>
                                                 </subviews>
@@ -160,13 +160,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="xqT-2u-VFI">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" ambiguous="YES" id="x4G-eU-E9l">
+                        <view key="titleView" contentMode="scaleToFill" id="x4G-eU-E9l">
                             <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="separatorColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="2" placeholder="YES" id="uAI-qz-noO"/>
-                            </constraints>
                         </view>
                     </navigationItem>
                     <connections>
@@ -340,11 +337,11 @@
             </objects>
             <point key="canvasLocation" x="567" y="-1540"/>
         </scene>
-        <!--Translation-->
+        <!--Translate-->
         <scene sceneID="lyn-AC-8Iy">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="emj-Fw-8fe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Translation" image="arrow.left.arrow.right.circle.fill" catalog="system" selectedImage="arrow.left.arrow.right.circle.fill" id="QnB-T2-S1c"/>
+                    <tabBarItem key="tabBarItem" title="Translate" image="double.arrow" selectedImage="double.arrow" id="QnB-T2-S1c"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="4XV-xI-Jek">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -363,7 +360,7 @@
         <scene sceneID="hWx-Oo-w4Z">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5CQ-fm-MwU" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.sun.fill" catalog="system" selectedImage="cloud.sun.fill" id="jkl-dA-zgM"/>
+                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.sun.fill" catalog="system" selectedImage="cloud.and.sun" id="jkl-dA-zgM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="UB8-85-2xi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -387,7 +384,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="w1r-YB-Mj4">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Y1J-hH-oBE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="782"/>
@@ -604,7 +601,7 @@
         <scene sceneID="VYT-T3-cRv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ns3-dF-Ob2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Currency" image="dollarsign.circle.fill" catalog="system" selectedImage="dollarsign.circle.fill" id="vD9-fx-hIg"/>
+                    <tabBarItem key="tabBarItem" title="Currency" image="dollarsign.circle.fill" catalog="system" selectedImage="dollarsign" id="vD9-fx-hIg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="BQ3-CK-Pdd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -623,10 +620,12 @@
     <resources>
         <image name="Invert-Button" width="40" height="40"/>
         <image name="Translate-Button" width="85" height="85"/>
-        <image name="arrow.left.arrow.right.circle.fill" catalog="system" width="128" height="121"/>
         <image name="clear" width="51" height="52"/>
+        <image name="cloud.and.sun" width="34" height="25"/>
         <image name="cloud.sun.fill" catalog="system" width="128" height="93"/>
+        <image name="dollarsign" width="24" height="25"/>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="double.arrow" width="24" height="25"/>
         <image name="fr_flag" width="84" height="85"/>
         <image name="rectangle.on.rectangle" width="26" height="21"/>
         <image name="usa_flag" width="84" height="85"/>
