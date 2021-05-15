@@ -360,7 +360,7 @@
         <scene sceneID="hWx-Oo-w4Z">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5CQ-fm-MwU" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.sun.fill" catalog="system" selectedImage="cloud.and.sun" id="jkl-dA-zgM"/>
+                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.and.sun" selectedImage="cloud.and.sun" id="jkl-dA-zgM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="UB8-85-2xi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -601,7 +601,7 @@
         <scene sceneID="VYT-T3-cRv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ns3-dF-Ob2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Currency" image="dollarsign.circle.fill" catalog="system" selectedImage="dollarsign" id="vD9-fx-hIg"/>
+                    <tabBarItem key="tabBarItem" title="Currency" image="dollarsign" selectedImage="dollarsign" id="vD9-fx-hIg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="BQ3-CK-Pdd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -622,9 +622,7 @@
         <image name="Translate-Button" width="85" height="85"/>
         <image name="clear" width="51" height="52"/>
         <image name="cloud.and.sun" width="34" height="25"/>
-        <image name="cloud.sun.fill" catalog="system" width="128" height="93"/>
         <image name="dollarsign" width="24" height="25"/>
-        <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="double.arrow" width="24" height="25"/>
         <image name="fr_flag" width="84" height="85"/>
         <image name="rectangle.on.rectangle" width="26" height="21"/>
